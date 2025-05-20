@@ -1,0 +1,132 @@
+neurolib:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2000
+
+nrel_solar_power:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 5162
+
+atec:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 1569
+
+smart_meters_in_london:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2898
+
+global_temp:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 3774
+
+global_wind:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 3696
+
+largest_ca:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 7491
+
+largest_gla:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 3376
+
+largest_gba:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2229
+
+china_air_quality:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 1105
+
+sirs:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2994
+
+sp500:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 1475
+
+m5:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 3049
+
+measles_england:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 1161
+
+wikipedia_web_traffic:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 112333
+
+google_community_mobility:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 5826
+
+rebound:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 6000
+
+wikipedia_web_traffic_2000:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2000
+
+wikipedia_web_traffic_20000:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 20000

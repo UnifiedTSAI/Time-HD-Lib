@@ -1,0 +1,95 @@
+neurolib:
+  enc_in: 2000
+  train_epochs: 10
+  dropout: 0.9
+  
+
+nrel_solar_power:
+  enc_in: 5162
+  train_epochs: 10
+  dropout: 0.9
+
+atec:
+  enc_in: 1569
+  train_epochs: 10
+  dropout: 0.9
+
+smart_meters_in_london:
+  enc_in: 2898
+  train_epochs: 10
+  dropout: 0.9
+
+global_temp:
+  enc_in: 3774
+  train_epochs: 10
+  dropout: 0.9
+
+global_wind:
+  enc_in: 3696
+  train_epochs: 10
+  dropout: 0.9
+
+largest_ca:
+  enc_in: 7491
+  train_epochs: 10
+  dropout: 0.9
+
+largest_gla:
+  enc_in: 3376
+  train_epochs: 10
+  dropout: 0.9
+
+largest_gba:
+  enc_in: 2229
+  train_epochs: 10
+  dropout: 0.9
+
+china_air_quality:
+  enc_in: 1105
+  train_epochs: 10
+  dropout: 0.9
+
+sirs:
+  enc_in: 2994
+  train_epochs: 10
+  dropout: 0.9
+
+sp500:
+  enc_in: 1475
+  train_epochs: 10
+  dropout: 0.9
+
+m5:
+  enc_in: 3049
+  train_epochs: 10
+  dropout: 0.9
+
+measles_england:
+  enc_in: 1161
+  train_epochs: 10
+  dropout: 0.9
+
+wikipedia_web_traffic:
+  enc_in: 112333
+  train_epochs: 10
+  dropout: 0.9
+
+google_community_mobility:
+  enc_in: 5826
+  train_epochs: 10
+  dropout: 0.9
+
+rebound:
+  enc_in: 6000
+  train_epochs: 10
+  dropout: 0.9
+
+wikipedia_web_traffic_2000:
+  enc_in: 2000
+  train_epochs: 10
+  dropout: 0.9
+
+wikipedia_web_traffic_20000:
+  enc_in: 20000
+  train_epochs: 10
+  dropout: 0.9

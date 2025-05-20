@@ -1,0 +1,7 @@
+learning_rate: [0.001]
+seq_len_factor: [5]
+d_model: [512]
+lradj: [type3]
+alpha: [0.01]
+e_layers: [2]
+channel_reduction_ratio: [16]

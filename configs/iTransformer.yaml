@@ -1,0 +1,157 @@
+neurolib:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+nrel_solar_power:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+atec:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+smart_meters_in_london:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+global_temp:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+global_wind:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+largest_ca:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+largest_gla:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+largest_gba:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+china_air_quality:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+sirs:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+sp500:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+m5:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+measles_england:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+wikipedia_web_traffic:
+  learning_rate: 0.001
+  d_model: 1
+  d_ff: 1
+  e_layers: 1
+  n_heads: 1
+  train_epochs: 10
+
+google_community_mobility:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+rebound:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+electricity:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+etth1:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+etth2:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+ettm1:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+ettm2:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+weather:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+traffic:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+wikipedia_web_traffic_2000:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+
+wikipedia_web_traffic_20000:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
