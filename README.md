@@ -1,7 +1,7 @@
 # Time-HD-Lib: A Lirbrary for High-Dimensional Time Series Forecasting
 
 <p align="center">
-<img src="./pic/Logo.png" height = "300" alt="" align=center />
+<img src="./pic/Logo.png" height = "100" alt="" align=center />
 </p>
 
 ## Time-HD: High-Dimensional Time Series Forecasting Benchmark
