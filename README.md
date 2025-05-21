@@ -6,10 +6,14 @@
 
 ## Time-HD: High-Dimensional Time Series Forecasting Benchmark
 
-<div style="display: flex; justify-content: center; align-items: center;">
-  <img src="./pic/Time-HD.png" height="200" alt="Image 1" style="margin-right: 10px;" />
-  <img src="./pic/dataset.png" height="200" alt="Image 2" />
-</div>
+<p align="center">
+  <table>
+    <tr>
+      <td><img src="./pic/Time-HD.png" height="200"></td>
+      <td><img src="./pic/dataset.png" height="200"></td>
+    </tr>
+  </table>
+</p>
 
 
 ## U-Cast: Learning Latent Hierarchical Channel Structure for High-Dimensional Time Series Forecasting
