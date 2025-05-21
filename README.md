@@ -1,9 +1,10 @@
-# Time-HD-Lib: A Lirbrary for High-Dimensional Time Sereis Forecasting
+# Time-HD-Lib: A Lirbrary for High-Dimensional Time Series Forecasting
 
 <div style="display: flex; justify-content: center; align-items: center;">
   <img src="./pic/Logo.png" height="250" alt="Image 1" style="margin-right: 10px;" />
   <img src="./pic/Time-HD.png" height="200" alt="Image 2" />
 </div>
+
 
 
 ## Usage
