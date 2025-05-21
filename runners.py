@@ -243,7 +243,7 @@ def run_hyperparameter_search(args):
     clear_gpu_memory(args)
 
 
-def run_training(args):
+def run_training(args): 
     """Run training mode with default hyperparameters."""
     for ii in range(args.itr):
         if args.seq_len is None:
