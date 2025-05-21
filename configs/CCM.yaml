@@ -1,4 +1,4 @@
-neurolib:
+Neurolib:
   enc_in: 2000
   train_epochs: 10
   d_ff: 64
@@ -7,7 +7,7 @@ neurolib:
   learning_rate: 0.001
   beta: 0.5
 
-nrel_solar_power:
+Solar:
   enc_in: 5162
   train_epochs: 10
   d_ff: 64
@@ -16,7 +16,7 @@ nrel_solar_power:
   learning_rate: 0.001
   beta: 0.5
 
-atec:
+Atec:
   enc_in: 1569
   train_epochs: 10
   d_ff: 64
@@ -25,7 +25,7 @@ atec:
   learning_rate: 0.001
   beta: 0.5
 
-smart_meters_in_london:
+Meter:
   enc_in: 2898
   train_epochs: 10
   d_ff: 64
@@ -34,7 +34,7 @@ smart_meters_in_london:
   learning_rate: 0.001
   beta: 0.5
 
-global_temp:
+Temp:
   enc_in: 3774
   train_epochs: 10
   d_ff: 64
@@ -43,7 +43,7 @@ global_temp:
   learning_rate: 0.001
   beta: 0.5
 
-global_wind:
+Wind:
   enc_in: 3696
   train_epochs: 10
   d_ff: 64
@@ -52,7 +52,7 @@ global_wind:
   learning_rate: 0.001
   beta: 0.5
 
-largest_ca:
+Traffic-CA:
   enc_in: 7491
   train_epochs: 10
   d_ff: 64
@@ -61,7 +61,7 @@ largest_ca:
   learning_rate: 0.001
   beta: 0.5
 
-largest_gla:
+Traffic-GLA:
   enc_in: 3376
   train_epochs: 10
   d_ff: 64
@@ -70,7 +70,7 @@ largest_gla:
   learning_rate: 0.001
   beta: 0.5
 
-largest_gba:
+Traffic-GBA:
   enc_in: 2229
   train_epochs: 10
   d_ff: 64
@@ -79,7 +79,7 @@ largest_gba:
   learning_rate: 0.001
   beta: 0.5
 
-china_air_quality:
+Air Quality:
   enc_in: 1105
   train_epochs: 10
   d_ff: 64
@@ -88,7 +88,7 @@ china_air_quality:
   learning_rate: 0.001
   beta: 0.5
 
-sirs:
+SIRS:
   enc_in: 2994
   train_epochs: 10
   d_ff: 64
@@ -97,7 +97,7 @@ sirs:
   learning_rate: 0.001
   beta: 0.5
 
-sp500:
+SP500:
   enc_in: 1475
   train_epochs: 10
   d_ff: 64
@@ -106,7 +106,7 @@ sp500:
   learning_rate: 0.001
   beta: 0.5
 
-m5:
+M5:
   enc_in: 3049
   train_epochs: 10
   d_ff: 64
@@ -115,7 +115,7 @@ m5:
   learning_rate: 0.001
   beta: 0.5
 
-measles_england:
+Measles:
   enc_in: 1161
   train_epochs: 10
   d_ff: 64
@@ -124,7 +124,7 @@ measles_england:
   learning_rate: 0.001
   beta: 0.5
 
-wikipedia_web_traffic:
+Wiki-20k:
   enc_in: 112333
   train_epochs: 10
   d_ff: 64
@@ -133,7 +133,7 @@ wikipedia_web_traffic:
   learning_rate: 0.001
   beta: 0.5
 
-google_community_mobility:
+Mobility:
   enc_in: 5826
   train_epochs: 10
   d_ff: 64
@@ -142,7 +142,7 @@ google_community_mobility:
   learning_rate: 0.001
   beta: 0.5
 
-rebound:
+Rebound:
   enc_in: 6000
   train_epochs: 10
   d_ff: 64
@@ -151,16 +151,7 @@ rebound:
   learning_rate: 0.001
   beta: 0.5
 
-weather:
-  enc_in: 21
-  train_epochs: 10
-  d_ff: 64
-  n_cluster: 10
-  individual: c
-  learning_rate: 0.001
-  beta: 0.5
-  
-wikipedia_web_traffic_2000:
+Wiki-2k:
   enc_in: 2000
   train_epochs: 10
   d_ff: 64
@@ -169,7 +160,7 @@ wikipedia_web_traffic_2000:
   learning_rate: 0.001
   beta: 0.5
 
-wikipedia_web_traffic_20000:
+Wiki-20k:
   enc_in: 20000
   train_epochs: 10
   d_ff: 64

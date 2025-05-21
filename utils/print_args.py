@@ -1,7 +1,7 @@
 def print_args(args):
     args.accelerator.print("\033[1m" + "Basic Config" + "\033[0m")
     args.accelerator.print(f'  {"Task Name:":<20}{args.task_name:<20}{"Is Training:":<20}{args.is_training:<20}')
-    args.accelerator.print(f'  {"Model ID:":<20}{args.model_id:<20}{"Model:":<20}{args.model:<20}')
+    args.accelerator.print(f'  {"Model:":<20}{args.model:<20}')
     args.accelerator.print()
 
     args.accelerator.print("\033[1m" + "Data Loader" + "\033[0m")

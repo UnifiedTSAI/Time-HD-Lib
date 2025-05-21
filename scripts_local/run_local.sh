@@ -1,29 +1,6 @@
 #!/bin/bash
-
-MODELS=("DLinear" "PAttn" "PatchTST" "TimeMixer" "PDF" "iTransformer" "Crossformer" "TSMixer" "FreTS" "Autoformer" "FEDformer" "TimesNet" "CCM" "DUET" "UCast")
-DATASETS=(
-  "atec"
-  "china_air_quality"
-  "global_temp"
-  "global_wind"
-  "google_community_mobility"
-  "m5"
-  "measles_england"
-  "sirs"
-  "sp500"
-  "wikipedia_web_traffic_20000"
-  "largest_ca"
-  "largest_gba"
-  "largest_gla"
-  "smart_meters_in_london"
-  "neurolib"
-  "nrel_solar_power"
-)
-
-# Default parameters
 gpu="all"
 pred_len=7
-seq_len=14
 batch_size=1
 features="M"
 task_name="long_term_forecast"
@@ -91,15 +68,10 @@ for data in "${DATASETS[@]}"; do
     echo "Training Mode: $is_training"
     echo "Starting training..."
 
-    accelerate launch --mixed_precision=bf16 run.py \
-      --task_name $task_name \
-      --is_training $is_training \
-      --model_id ${data}'_'${seq_len}'_'${pred_len} \
+    accelerate launch run.py \
       --model $model \
       --data $data \
-      --seq_len $seq_len \
       --pred_len $pred_len \
-      --batch_size $batch_size \
       --train_epochs 1
 
     echo "Training completed for model $model on dataset $data"

@@ -1,12 +1,11 @@
-neurolib:
+Neurolib:
   enc_in: 2000
   train_epochs: 10
   d_model: 512
   d_ff: 512
   e_layers: 2
-  
 
-nrel_solar_power:
+Solar:
   enc_in: 5162
   train_epochs: 10
   d_model: 64
@@ -14,7 +13,7 @@ nrel_solar_power:
   e_layers: 2
   n_heads: 2
 
-atec:
+Atec:
   enc_in: 1569
   train_epochs: 10
   d_model: 64
@@ -22,7 +21,7 @@ atec:
   e_layers: 2
   n_heads: 2
 
-smart_meters_in_london:
+Meter:
   enc_in: 2898
   train_epochs: 10
   d_model: 64
@@ -30,7 +29,7 @@ smart_meters_in_london:
   e_layers: 2
   n_heads: 2
 
-global_temp:
+Temp:
   enc_in: 3774
   train_epochs: 10
   d_model: 64
@@ -38,7 +37,7 @@ global_temp:
   e_layers: 2
   n_heads: 2
 
-global_wind:
+Wind:
   enc_in: 3696
   train_epochs: 10
   d_model: 256
@@ -46,7 +45,7 @@ global_wind:
   e_layers: 2
   n_heads: 2
 
-largest_ca:
+Traffic-CA:
   enc_in: 7491
   train_epochs: 10
   d_model: 64
@@ -54,7 +53,7 @@ largest_ca:
   e_layers: 2
   n_heads: 2
 
-largest_gla:
+Traffic-GLA:
   enc_in: 3376
   train_epochs: 10
   d_model: 64
@@ -62,7 +61,7 @@ largest_gla:
   e_layers: 2
   n_heads: 2
 
-largest_gba:
+Traffic-GBA:
   enc_in: 2229
   train_epochs: 10
   d_model: 64
@@ -70,7 +69,7 @@ largest_gba:
   e_layers: 2
   n_heads: 2
 
-china_air_quality:
+Air Quality:
   enc_in: 1105
   train_epochs: 10
   d_model: 64
@@ -78,7 +77,7 @@ china_air_quality:
   e_layers: 2
   n_heads: 2
 
-sirs:
+SIRS:
   enc_in: 2994
   train_epochs: 10
   d_model: 64
@@ -86,7 +85,7 @@ sirs:
   e_layers: 2
   n_heads: 2
 
-sp500:
+SP500:
   enc_in: 1475
   train_epochs: 10
   d_model: 64
@@ -94,7 +93,7 @@ sp500:
   e_layers: 2
   n_heads: 2
 
-m5:
+M5:
   enc_in: 3049
   train_epochs: 10
   d_model: 64
@@ -102,7 +101,7 @@ m5:
   e_layers: 2
   n_heads: 2
 
-measles_england:
+Measles:
   enc_in: 1161
   train_epochs: 10
   d_model: 64
@@ -110,7 +109,7 @@ measles_england:
   e_layers: 2
   n_heads: 2
 
-wikipedia_web_traffic:
+Wiki:
   enc_in: 112333
   train_epochs: 10
   d_model: 64
@@ -118,7 +117,7 @@ wikipedia_web_traffic:
   e_layers: 2
   n_heads: 2
 
-google_community_mobility:
+Mobility:
   enc_in: 5826
   train_epochs: 10
   d_model: 64
@@ -126,7 +125,7 @@ google_community_mobility:
   e_layers: 2
   n_heads: 2
 
-rebound:
+Rebound:
   enc_in: 6000
   train_epochs: 10
   d_model: 64
@@ -134,7 +133,7 @@ rebound:
   e_layers: 2
   n_heads: 2
 
-wikipedia_web_traffic_2000:
+Wiki-2k:
   enc_in: 2000
   train_epochs: 10
   d_model: 64
@@ -142,7 +141,7 @@ wikipedia_web_traffic_2000:
   e_layers: 2
   n_heads: 2
 
-wikipedia_web_traffic_20000:
+Wiki-20k:
   enc_in: 20000
   train_epochs: 10
   d_model: 64

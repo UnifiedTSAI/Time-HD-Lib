@@ -1,135 +1,117 @@
-neurolib:
+Neurolib:
   enc_in: 2000
   train_epochs: 10
   n_heads: 1
   d_model: 128
   d_ff: 256
-  
-  
 
-nrel_solar_power:
+Solar:
   enc_in: 5162
   train_epochs: 10
   n_heads: 1
   d_model: 128
   d_ff: 256
-  
 
-atec:
+Atec:
   enc_in: 1569
   train_epochs: 10
   n_heads: 1
   d_model: 128
   d_ff: 256
-  
 
-smart_meters_in_london:
+Meter:
   enc_in: 2898
   train_epochs: 10
   n_heads: 1
   d_model: 128
   d_ff: 256
-  
 
-global_temp:
+Temp:
   enc_in: 3774
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-global_wind:
+Wind:
   enc_in: 3696
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-largest_ca:
+Traffic-CA:
   enc_in: 7491
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-largest_gla:
+Traffic-GLA:
   enc_in: 3376
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-largest_gba:
+Traffic-GBA:
   enc_in: 2229
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-china_air_quality:
+Air Quality:
   enc_in: 1105
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-sirs:
+SIRS:
   enc_in: 2994
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-sp500:
+SP500:
   enc_in: 1475
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-m5:
+M5:
   enc_in: 3049
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-measles_england:
+Measles:
   enc_in: 1161
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-wikipedia_web_traffic:
+Wiki:
   enc_in: 112333
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-google_community_mobility:
+Mobility:
   enc_in: 5826
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
 
-rebound:
+Rebound:
   enc_in: 6000
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
 
-wikipedia_web_traffic_2000:
+Wiki-2k:
   enc_in: 2000
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  
-wikipedia_web_traffic_20000:
+
+Wiki-20k:
   enc_in: 20000
   train_epochs: 10
   n_heads: 1
   d_ff: 1024
-  

@@ -1,88 +1,88 @@
-neurolib:
+Neurolib:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-nrel_solar_power:
+Solar:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-atec:
+Atec:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-smart_meters_in_london:
+Meter:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-global_temp:
+Temp:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-global_wind:
+Wind:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-largest_ca:
+Traffic-CA:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-largest_gla:
+Traffic-GLA:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-largest_gba:
+Traffic-GBA:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-china_air_quality:
+Air Quality:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-sirs:
+SIRS:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-sp500:
+SP500:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-m5:
+M5:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-measles_england:
+Measles:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-wikipedia_web_traffic:
+Wiki:
   learning_rate: 0.001
   d_model: 1
   d_ff: 1
@@ -90,67 +90,67 @@ wikipedia_web_traffic:
   n_heads: 1
   train_epochs: 10
 
-google_community_mobility:
+Mobility:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-rebound:
+Rebound:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-electricity:
+Electricity:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-etth1:
+ETTh1:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-etth2:
+ETTh2:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-ettm1:
+ETTm1:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-ettm2:
+ETTm2:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-weather:
+Weather:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-traffic:
+Traffic:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-wikipedia_web_traffic_2000:
+Wiki-2k:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512
   train_epochs: 10
 
-wikipedia_web_traffic_20000:
+Wiki-20k:
   learning_rate: 0.001
   d_model: 512
   d_ff: 512

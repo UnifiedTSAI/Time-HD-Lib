@@ -1,4 +1,4 @@
-neurolib:
+Neurolib:
   enc_in: 2000
   train_epochs: 10
   learning_rate: 0.001
@@ -8,9 +8,8 @@ neurolib:
   down_sampling_layers: 1
   down_sampling_window: 2
   down_sampling_method: avg
-  
 
-nrel_solar_power:
+Solar:
   enc_in: 5162
   train_epochs: 10
   learning_rate: 0.001
@@ -21,7 +20,7 @@ nrel_solar_power:
   down_sampling_window: 2
   down_sampling_method: avg
 
-atec:
+Atec:
   enc_in: 1569
   train_epochs: 10
   learning_rate: 0.001
@@ -32,7 +31,7 @@ atec:
   down_sampling_window: 2
   down_sampling_method: avg
 
-smart_meters_in_london:
+Meter:
   enc_in: 2898
   train_epochs: 10
   learning_rate: 0.001
@@ -43,7 +42,7 @@ smart_meters_in_london:
   down_sampling_window: 2
   down_sampling_method: avg
 
-global_temp:
+Temp:
   enc_in: 3774
   train_epochs: 10
   learning_rate: 0.001
@@ -54,7 +53,7 @@ global_temp:
   down_sampling_window: 2
   down_sampling_method: avg
 
-global_wind:
+Wind:
   enc_in: 3696
   train_epochs: 10
   learning_rate: 0.001
@@ -65,7 +64,7 @@ global_wind:
   down_sampling_window: 2
   down_sampling_method: avg
 
-largest_ca:
+Traffic-CA:
   enc_in: 7491
   train_epochs: 10
   learning_rate: 0.001
@@ -76,7 +75,7 @@ largest_ca:
   down_sampling_window: 2
   down_sampling_method: avg
 
-largest_gla:
+Traffic-GLA:
   enc_in: 3376
   train_epochs: 10
   learning_rate: 0.001
@@ -87,7 +86,7 @@ largest_gla:
   down_sampling_window: 2
   down_sampling_method: avg
 
-largest_gba:
+Traffic-GBA:
   enc_in: 2229
   train_epochs: 10
   learning_rate: 0.001
@@ -98,7 +97,7 @@ largest_gba:
   down_sampling_window: 2
   down_sampling_method: avg
 
-china_air_quality:
+Air Quality:
   enc_in: 1105
   train_epochs: 10
   learning_rate: 0.001
@@ -109,7 +108,7 @@ china_air_quality:
   down_sampling_window: 2
   down_sampling_method: avg
 
-sirs:
+SIRS:
   enc_in: 2994
   train_epochs: 10
   learning_rate: 0.001
@@ -120,7 +119,7 @@ sirs:
   down_sampling_window: 2
   down_sampling_method: avg
 
-sp500:
+SP500:
   enc_in: 1475
   train_epochs: 10
   learning_rate: 0.001
@@ -131,7 +130,7 @@ sp500:
   down_sampling_window: 2
   down_sampling_method: avg
 
-m5:
+M5:
   enc_in: 3049
   train_epochs: 10
   learning_rate: 0.001
@@ -142,7 +141,7 @@ m5:
   down_sampling_window: 2
   down_sampling_method: avg
 
-measles_england:
+Measles:
   enc_in: 1161
   train_epochs: 10
   learning_rate: 0.001
@@ -153,7 +152,7 @@ measles_england:
   down_sampling_window: 2
   down_sampling_method: avg
 
-wikipedia_web_traffic:
+Wiki:
   enc_in: 112333
   train_epochs: 10
   learning_rate: 0.001
@@ -164,7 +163,7 @@ wikipedia_web_traffic:
   down_sampling_window: 2
   down_sampling_method: avg
 
-google_community_mobility:
+Mobility:
   enc_in: 5826
   train_epochs: 10
   learning_rate: 0.001
@@ -175,7 +174,7 @@ google_community_mobility:
   down_sampling_window: 2
   down_sampling_method: avg
 
-rebound:
+Rebound:
   enc_in: 6000
   train_epochs: 10
   learning_rate: 0.001
@@ -186,7 +185,7 @@ rebound:
   down_sampling_window: 2
   down_sampling_method: avg
 
-wikipedia_web_traffic_2000:
+Wiki-2k:
   enc_in: 2000
   train_epochs: 10
   learning_rate: 0.001
@@ -197,7 +196,7 @@ wikipedia_web_traffic_2000:
   down_sampling_window: 2
   down_sampling_method: avg
 
-wikipedia_web_traffic_2000:
+Wiki-20k:
   enc_in: 20000
   train_epochs: 10
   learning_rate: 0.001

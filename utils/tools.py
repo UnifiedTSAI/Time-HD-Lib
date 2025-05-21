@@ -1,10 +1,10 @@
 import os
-import numpy as np
+import json
 import torch
+import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import math
-import json
 import csv
 
 plt.switch_backend('agg')
@@ -65,12 +65,11 @@ class EarlyStopping:
     def save_checkpoint(self, val_loss, model, path, metrics=None):
         if self.verbose:
             self.accelerator.print(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
-        # torch.save(model.state_dict(), path + '/' + 'checkpoint.pth')
-        # if self.accelerator is not None:
-        #     model = self.accelerator.unwrap_model(model)
-        #     torch.save(model.state_dict(), path + '/' + 'checkpoint')
-        # else:
-        #     torch.save(model.state_dict(), path + '/' + 'checkpoint')
+        if self.accelerator is not None:
+            model = self.accelerator.unwrap_model(model)
+            torch.save(model.state_dict(), path + '/' + 'checkpoint.pth')
+        else:
+            torch.save(model.state_dict(), path + '/' + 'checkpoint.pth')
         self.val_loss_min = val_loss
         
         # 如果有指标信息，保存到JSON文件
@@ -78,7 +77,7 @@ class EarlyStopping:
             metrics_file = os.path.join(path, 'best_metrics.json')
             with open(metrics_file, 'w') as f:
                 json.dump(metrics, f, indent=4)
-        
+
     def get_best_metrics(self):
         """返回最佳验证指标"""
         return self.best_metrics

@@ -17,14 +17,14 @@ import io
 import contextlib
 warnings.filterwarnings('ignore')
 
-def count_parameters(model):
+def count_parameters(accelerator,model):
     total_params = 0
     for name, parameter in model.named_parameters():
         if not parameter.requires_grad:
             continue
         params = parameter.numel()
         total_params += params
-    print(f"Total Trainable Params: {total_params}")
+    accelerator.print(f"Total Trainable Params: {total_params}")
     return total_params
 
 class Exp_Long_Term_Forecast(Exp_Basic):
@@ -38,7 +38,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             summary(model)
             model_summary_str = buf.getvalue()
         self.args.accelerator.print(model_summary_str)
-        count_parameters(model)
+        count_parameters(self.args.accelerator,model)
 
         return model
 
@@ -218,78 +218,48 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         # Return the best model metrics along with the path to the best model
         return self.model, all_epoch_metrics, best_metrics, best_model_path
 
-    def test(self, setting, test=0):
+    def test(self, setting):
+        """Test the model on the test dataset."""
+        # Load test data
         test_data, test_loader = self._get_data(flag='test')
-        if test:
-            print('loading model')
-            self.model.load_state_dict(torch.load(os.path.join('./checkpoints/' + setting, 'checkpoint.pth')))
-
-        # Prepare the model and test dataloader with Accelerator
-        # self.model, test_loader = self.accelerator.prepare(self.model, test_loader)
-
-        preds = []
-        trues = []
-        folder_path = os.path.join('./test_results/', setting)
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
-
-        self.model.eval()
-        with torch.no_grad():
-            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in tqdm(enumerate(test_loader)):
-                batch_x = batch_x.float()
-                batch_y = batch_y.float()
-
-                batch_x_mark = batch_x_mark.float()
-                batch_y_mark = batch_y_mark.float()
-
-                # decoder input
-                dec_inp = torch.zeros_like(batch_y[:, -self.args.pred_len:, :]).float()
-                dec_inp = torch.cat([batch_y[:, :self.args.label_len, :], dec_inp], dim=1).float()
-
-                with self.accelerator.autocast():
-                    outputs, loss_aux = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-
-                f_dim = -1 if self.args.features == 'MS' else 0
-                outputs = outputs[:, -self.args.pred_len:, :]
-                batch_y = batch_y[:, -self.args.pred_len:, :]
-                outputs = outputs.detach().cpu().numpy()
-                batch_y = batch_y.detach().cpu().numpy()
-                if test_data.scale and self.args.inverse:
-                    shape = batch_y.shape
-                    if outputs.shape[-1] != batch_y.shape[-1]:
-                        outputs = np.tile(outputs, [1, 1, int(batch_y.shape[-1] / outputs.shape[-1])])
-                    outputs = test_data.inverse_transform(outputs.reshape(shape[0] * shape[1], -1)).reshape(shape)
-                    batch_y = test_data.inverse_transform(batch_y.reshape(shape[0] * shape[1], -1)).reshape(shape)
-
-                outputs = outputs[:, :, f_dim:]
-                batch_y = batch_y[:, :, f_dim:]
-
-                pred = outputs
-                true = batch_y
-
-                preds.append(pred)
-                trues.append(true)
-                if i % 20 == 0:
-                    input_arr = batch_x.detach().cpu().numpy()
-                    if test_data.scale and self.args.inverse:
-                        shape = input_arr.shape
-                        input_arr = test_data.inverse_transform(input_arr.reshape(shape[0] * shape[1], -1)).reshape(shape)
-                    gt = np.concatenate((input_arr[0, :, -1], true[0, :, -1]), axis=0)
-                    pd = np.concatenate((input_arr[0, :, -1], pred[0, :, -1]), axis=0)
-                    # visual(gt, pd, os.path.join(folder_path, str(i) + '.pdf'))
-
-        preds = np.concatenate(preds, axis=0)
-        trues = np.concatenate(trues, axis=0)
-        print('test shape:', preds.shape, trues.shape)
-        preds = preds.reshape(-1, preds.shape[-2], preds.shape[-1])
-        trues = trues.reshape(-1, trues.shape[-2], trues.shape[-1])
-        print('test shape:', preds.shape, trues.shape)
-
-        # np.save(os.path.join(folder_path, 'pred.npy'), preds)
-        # np.save(os.path.join(folder_path, 'true.npy'), trues)
-
-        mae, mse, rmse, mape, mspe = metric(preds, trues)
-        print('mse:{}, mae:{}'.format(mse, mae))
-
-        return self.model
         
+        # Load the best model from checkpoint
+        path = os.path.join(self.args.checkpoints, setting)
+        best_model_path = os.path.join(path, 'checkpoint.pth')
+        
+        self.accelerator.print(f'Loading model from {best_model_path}')
+        
+        try:
+            # Load model checkpoint
+            checkpoint = torch.load(best_model_path, map_location=self.device)
+            self.model.load_state_dict(checkpoint['model_state_dict'])
+            
+            # Prepare model and test loader for distributed testing
+            self.model, test_loader = self.accelerator.prepare(self.model, test_loader)
+            
+            self.accelerator.print('Model loaded successfully')
+        except FileNotFoundError:
+            self.accelerator.print(f'Checkpoint not found at {best_model_path}')
+            return
+        except Exception as e:
+            self.accelerator.print(f'Error loading model: {e}')
+            return
+        
+        # Set model to evaluation mode
+        self.model.eval()
+        
+        # Set criterion
+        criterion = self._select_criterion()
+        
+        # Evaluate on test data
+        test_loss, test_mae_loss = self.vali(test_data, test_loader, criterion, test=True)
+        
+        self.accelerator.print('>>>>>>>testing results : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
+        self.accelerator.print('Test Loss: {0:.7f} Test MAE: {1:.7f}'.format(test_loss, test_mae_loss))
+        
+        # Calculate additional metrics if needed
+        if hasattr(self.args, 'use_dtw') and self.args.use_dtw:
+            self.accelerator.print('Calculating DTW metrics...')
+            # Implementation for DTW metrics would go here
+            
+        return test_loss, test_mae_loss
