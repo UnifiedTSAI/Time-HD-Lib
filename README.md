@@ -5,15 +5,15 @@
 </p>
 
 ## Time-HD: High-Dimensional Time Series Forecasting Benchmark
+<p align="center">
+<img src=".\pic\Time-HD.png" height = "200" alt="" align=center />
+</p>
+Time-HD is the first comprehensive benchmark suite specifically focused on high-dimensional time series, offering large-scale, domain-diverse dataset.
 
 <p align="center">
-  <table>
-    <tr>
-      <td><img src="./pic/Time-HD.png" height="200"></td>
-      <td><img src="./pic/dataset.png" height="200"></td>
-    </tr>
-  </table>
+<img src=".\pic\dataset.png" height = "200" alt="" align=center />
 </p>
+The goal of Time-HD is to support research in time series forecasting, a rapidly growing field. The statistics of the datasets are shown in the table above. These datasets exhibit several key characteristics: High Dimensionality, Diverse Sources, Varied Scales, Different Sampling Frequencies, and Broad Domain Coverage.
 
 
 ## U-Cast: Learning Latent Hierarchical Channel Structure for High-Dimensional Time Series Forecasting
