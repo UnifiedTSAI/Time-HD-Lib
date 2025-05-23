@@ -13,7 +13,7 @@ To cultivate a collaborative research ecosystem, we release Time-HD-Lib. This op
 Time-HD is the first comprehensive benchmark suite specifically focused on high-dimensional time series, offering large-scale, domain-diverse dataset.
 
 <p align="center">
-<img src=".\pic\dataset.png" height = "200" alt="" align=center />
+<img src=".\pic\dataset.png" height = "300" alt="" align=center />
 </p>
 The goal of Time-HD is to support research in time series forecasting, a rapidly growing field. The statistics of the datasets are shown in the table above. These datasets exhibit several key characteristics: High Dimensionality, Diverse Sources, Varied Scales, Different Sampling Frequencies, and Broad Domain Coverage.
 
