@@ -179,3 +179,4 @@ toy_experiments
 attn_maps
 skip_matrix
 extract_time_metrics.py
+scripts_slurm
