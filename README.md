@@ -34,7 +34,33 @@ or
 conda env create -f environment.yaml
 ```
 
-2. Prepare Data. Our code automatically downloads datasets from Hugging Face. Alternatively, you can manually download datasets by running: ```python download_dataset.py```. The summary of the supported high-dimensional time series datasets is shown in Table 2 above. Besides these, we also support datasets such as ECL, ETTh1, ETTh2, ETTm1, ETTm2, Weather, and Traffic.
+2. Prepare Data
+
+To access the dataset, follow these steps:
+
+a. Create a **anonymous** Hugging Face account, if you do not already have one.
+
+b. Visit the dataset page:  
+   [https://huggingface.co/datasets/Time-HD-Anonymous/High_Dimensional_Time_Series](https://huggingface.co/datasets/Time-HD-Anonymous/High_Dimensional_Time_Series)
+
+c. Click **“Agree and access repository”** to request access. You must be logged in to complete this step.
+
+d. Create new Access Token. Token type should be "write".
+
+d. Authenticate on your local machine by running:
+
+   ```bash
+   huggingface-cli login
+   ```
+   and enter your generated token above.
+
+e. Once access is granted, you can manually download all the dataset by running:
+
+   ```bash
+   python download_dataset.py
+   ```
+
+The summary of the supported high-dimensional time series datasets is shown in Table 2 above. Besides these, we also support datasets such as ECL, ETTh1, ETTh2, ETTm1, ETTm2, Weather, and Traffic.
 
 3. Train and evaluate model. We provide the hyperparameters config for all datasets and benchmarks under the folder `./configs/`. You can run the experiment as the following examples:
 

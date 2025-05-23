@@ -44,11 +44,8 @@ class Dataset_Custom(Dataset):
     def __read_data__(self):
         self.scaler = StandardScaler()
 
-
-        # from huggingface_hub import login
-        # login("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")
-        dict_raw = load_dataset("lingfenggold/High_Dimensional_Time_Series", self.args.data, cache_dir="dataset")
-        # dict_raw = load_dataset("lingfenggold/High_Dimensional_Time_Series", self.args.data, cache_dir="/mnt/bn/gec-scl-sales-forecast/high-dimension/dataset")
+        dict_raw = load_dataset("Time-HD-Anonymous/High_Dimensional_Time_Series", self.args.data, cache_dir="dataset")
+        
         df_raw = dict_raw['train'].to_pandas()
         '''
         df_raw.columns: ['date', ...(other features), target feature]
