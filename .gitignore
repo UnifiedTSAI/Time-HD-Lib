@@ -181,7 +181,6 @@ skip_matrix
 extract_time_metrics.py
 scripts_slurm
 scripts_local
-data_provider
 exp
 utils
 README_old.md
