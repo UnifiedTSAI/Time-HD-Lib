@@ -1,2 +1,0 @@
-learning_rate: [0.0001, 0.001, 0.01]
-seq_len_factor: [2, 3, 4]
