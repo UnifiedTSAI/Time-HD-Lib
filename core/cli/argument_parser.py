@@ -131,14 +131,10 @@ def create_argument_parser() -> argparse.ArgumentParser:
     # GPU and distributed training
     parser.add_argument('--use_gpu', type=bool, default=True, 
                         help='Enable GPU acceleration')
-    parser.add_argument('--gpu', type=int, default=0, 
-                        help='GPU device ID')
-    parser.add_argument('--gpu_type', type=str, default='cuda', 
-                        help='GPU type: [cuda, mps]')
-    parser.add_argument('--use_multi_gpu', action='store_true', default=False,
-                        help='Enable multi-GPU training')
-    parser.add_argument('--devices', type=str, default='0,1,2,3', 
-                        help='Comma-separated GPU device IDs for multi-GPU')
+    parser.add_argument('--gpu', type=str, default=None, 
+                        help='GPU device ID or comma-separated list (e.g., "0" or "0,2,3,7")')
+
+
 
     # Hyperparameter search
     parser.add_argument('--hyper_parameter_searching', action='store_true', default=False,

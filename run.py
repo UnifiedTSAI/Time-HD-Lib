@@ -343,7 +343,19 @@ def run_hyperparameter_search(accelerator, args):
 def main():
     """Main entry point for the framework."""
     
-    # Initialize accelerator early for consistent printing across distributed processes
+    # Parse command line arguments first to check GPU settings
+    from core.cli import create_argument_parser
+    parser = create_argument_parser()
+    args = parser.parse_args()
+    
+    # Set CUDA_VISIBLE_DEVICES based on GPU arguments
+    if hasattr(args, 'gpu') and args.gpu is not None:
+        # Handle GPU specification
+        gpu_str = str(args.gpu).replace(' ', '')  # Remove spaces and convert to string
+        if gpu_str:  # Only set if not empty
+            os.environ['CUDA_VISIBLE_DEVICES'] = gpu_str
+    
+    # Initialize accelerator after setting GPU environment
     from accelerate import Accelerator
     from accelerate.utils import DistributedDataParallelKwargs
     
@@ -354,10 +366,6 @@ def main():
     accelerator.print("=" * 80)
     accelerator.print("🚀 Time-HD-Lib: A Lirbrary for High-Dimensional Time Series Forecasting")
     accelerator.print("=" * 80)
-    
-    # Parse command line arguments
-    parser = create_argument_parser()
-    args = parser.parse_args()
     
     # Add accelerator to arguments for hyperparameter search compatibility
     args.accelerator = accelerator
