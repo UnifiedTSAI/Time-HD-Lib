@@ -352,7 +352,7 @@ def main():
     
     # Print framework header
     accelerator.print("=" * 80)
-    accelerator.print("🚀 High-Dimensional Time Series Analysis Framework")
+    accelerator.print("🚀 Time-HD-Lib: A Lirbrary for High-Dimensional Time Series Forecasting")
     accelerator.print("=" * 80)
     
     # Parse command line arguments
@@ -370,28 +370,21 @@ def main():
             args.model_id = f"hp_search_{args.model}"
         if not hasattr(args, 'des'):
             args.des = "hyperparameter_search"
-        if not hasattr(args, 'distil'):
-            args.distil = True
-        if not hasattr(args, 'embed'):
-            args.embed = 'timeF'
-        if not hasattr(args, 'hp_log_dir'):
-            args.hp_log_dir = './hp_logs/'
-        if not hasattr(args, 'seq_len_factor'):
-            args.seq_len_factor = 2
         
         run_hyperparameter_search(accelerator, args)
         return
+
+    if args.seq_len is None:
+        args.seq_len = args.pred_len * args.seq_len_factor
     
     # Print configuration summary
     accelerator.print("\n📋 Configuration Summary:")
     accelerator.print(f"   Task: {args.task_name}")
     accelerator.print(f"   Model: {args.model}")
     accelerator.print(f"   Dataset: {args.data}")
-    accelerator.print(f"   Features: {args.features}")
-    accelerator.print(f"   Sequence Length: {args.seq_len}")
-    if hasattr(args, 'pred_len'):
-        accelerator.print(f"   Prediction Length: {args.pred_len}")
-    accelerator.print(f"   Training: {'Yes' if args.is_training else 'No'}")
+    accelerator.print(f"   Input Sequence Length: {args.seq_len}")
+    accelerator.print(f"   Prediction Length: {args.pred_len}")
+    accelerator.print(f"   Training Mode: {'Yes' if args.is_training else 'No'}")
     accelerator.print(f"   GPU: {'Yes' if args.use_gpu else 'No'}")
     accelerator.print()
     

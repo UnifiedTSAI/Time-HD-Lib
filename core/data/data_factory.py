@@ -1,6 +1,4 @@
-from data_provider.data_loader import Dataset_ETT_hour, Dataset_ETT_minute, Dataset_Custom, Dataset_M4, PSMSegLoader, \
-    MSLSegLoader, SMAPSegLoader, SMDSegLoader, SWATSegLoader, UEAloader
-# from data_provider.uea import collate_fn
+from .data_loader import Dataset_ETT_hour, Dataset_ETT_minute, Dataset_Custom
 from torch.utils.data import DataLoader
 
 data_dict = {
@@ -8,13 +6,6 @@ data_dict = {
     'ETTh2': Dataset_ETT_hour,
     'ETTm1': Dataset_ETT_minute,
     'ETTm2': Dataset_ETT_minute,
-    'm4': Dataset_M4,
-    'PSM': PSMSegLoader,
-    'MSL': MSLSegLoader,
-    'SMAP': SMAPSegLoader,
-    'SMD': SMDSegLoader,
-    'SWAT': SWATSegLoader,
-    'UEA': UEAloader,
     'custom': Dataset_Custom
 }
 
@@ -45,7 +36,8 @@ def data_provider(args, flag, accelerator=None):
         seasonal_patterns=args.seasonal_patterns
     )
 
-    accelerator.print(flag, len(data_set))
+    if accelerator:
+        accelerator.print(flag, len(data_set))
 
     data_loader = DataLoader(
         data_set,
@@ -55,4 +47,4 @@ def data_provider(args, flag, accelerator=None):
         drop_last=drop_last,
         pin_memory=True)
     
-    return data_set, data_loader
+    return data_set, data_loader 

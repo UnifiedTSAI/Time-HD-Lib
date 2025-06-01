@@ -69,7 +69,6 @@ class TransformerConfig(ModelConfig):
     
     # Transformer specific
     factor: int = 1
-    distil: bool = True
     embed: str = 'timeF'
     
     # Attention specific

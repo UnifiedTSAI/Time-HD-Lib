@@ -57,7 +57,7 @@ def create_argument_parser() -> argparse.ArgumentParser:
                         help='Seasonal patterns for M4 dataset')
     parser.add_argument('--inverse', action='store_true', default=False,
                         help='Apply inverse transformation to denormalize outputs')
-    parser.add_argument('--seq_len_factor', type=int, default=2, 
+    parser.add_argument('--seq_len_factor', type=int, default=4, 
                         help='Multiplier for automatic sequence length calculation')
 
     # Model architecture parameters
@@ -89,8 +89,6 @@ def create_argument_parser() -> argparse.ArgumentParser:
                         help='Moving average window size for decomposition')
     parser.add_argument('--factor', type=int, default=1, 
                         help='Attention factor for ProbSparse attention')
-    parser.add_argument('--distil', action='store_false', default=True,
-                        help='Disable distilling in encoder (use flag to disable)')
     parser.add_argument('--dropout', type=float, default=0.1, 
                         help='Dropout rate for regularization')
     parser.add_argument('--embed', type=str, default='timeF',

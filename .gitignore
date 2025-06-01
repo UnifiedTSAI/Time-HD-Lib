@@ -182,8 +182,6 @@ extract_time_metrics.py
 scripts_slurm
 scripts_local
 exp
-# data_provider
-# utils_old
 README_old.md
 download_dataset.py
 run_new.py

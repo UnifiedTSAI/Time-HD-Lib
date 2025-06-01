@@ -1,8 +1,10 @@
 import torch
 import torch.nn as nn
-import numpy as np
+import torch.nn.functional as F
+
+from core.utils.masking import TriangularCausalMask, ProbMask
 from math import sqrt
-from utils.masking import TriangularCausalMask, ProbMask
+import numpy as np
 
 # Optional imports
 try:

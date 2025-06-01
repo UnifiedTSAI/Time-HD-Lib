@@ -66,7 +66,10 @@ class EarlyStopping:
                 self.best_metrics = metrics
         elif score < self.best_score + self.delta:
             self.counter += 1
-            self.accelerator.print(f'EarlyStopping counter: {self.counter} out of {self.patience}')
+            if self.accelerator:
+                self.accelerator.print(f'EarlyStopping counter: {self.counter} out of {self.patience}')
+            else:
+                print(f'EarlyStopping counter: {self.counter} out of {self.patience}')
             if self.counter >= self.patience:
                 self.early_stop = True
         else:
@@ -79,7 +82,10 @@ class EarlyStopping:
     def save_checkpoint(self, val_loss, model, path, metrics=None):
         if self.verbose:
             # Use accelerator for consistent printing across processes
-            self.accelerator.print(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
+            if self.accelerator:
+                self.accelerator.print(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
+            else:
+                print(f'Validation loss decreased ({self.val_loss_min:.6f} --> {val_loss:.6f}).  Saving model ...')
         
         # Ensure checkpoints directory exists
         checkpoints_dir = './checkpoints'
@@ -90,7 +96,8 @@ class EarlyStopping:
         experiment_name = os.path.basename(path)
         checkpoint_file = os.path.join(checkpoints_dir, f'{experiment_name}.pth')
         
-        model = self.accelerator.unwrap_model(model)
+        if self.accelerator:
+            model = self.accelerator.unwrap_model(model)
         
         torch.save(model.state_dict(), checkpoint_file)
         self.val_loss_min = val_loss

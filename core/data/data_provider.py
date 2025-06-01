@@ -9,9 +9,7 @@ extensibility for future enhancements.
 from typing import Tuple, Any, Optional
 from torch.utils.data import Dataset, DataLoader
 from core.config import BaseConfig
-
-# Import the existing data provider for backward compatibility
-from data_provider.data_factory import data_provider as legacy_data_provider
+from .data_factory import data_provider as core_data_provider
 
 
 def data_provider(config: BaseConfig, flag: str, accelerator=None) -> Tuple[Dataset, DataLoader]:
@@ -32,7 +30,5 @@ def data_provider(config: BaseConfig, flag: str, accelerator=None) -> Tuple[Data
             - Dataset: PyTorch dataset instance with preprocessed data
             - DataLoader: Configured data loader for batch iteration
     """
-    # Currently delegates to the legacy data provider for backward compatibility
-    # Future enhancement: Replace with registry-based system for extensible data loading
-    
-    return legacy_data_provider(config, flag, accelerator) 
+    # Use the core data provider implementation
+    return core_data_provider(config, flag, accelerator) 

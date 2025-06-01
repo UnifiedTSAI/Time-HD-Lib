@@ -26,6 +26,7 @@ class BaseExperiment(ABC):
         self.config = config
         self.accelerator = getattr(config, 'accelerator', None)
         self.device = self.accelerator.device if self.accelerator else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self._device_info_printed = False  # Flag to track if device info has been printed
         
         # Print device information
         if self.accelerator and torch.cuda.is_available():
@@ -35,8 +36,8 @@ class BaseExperiment(ABC):
         self.model = self._build_model()
     
     def _print_device_info(self):
-        """Print device information."""
-        if self.accelerator:
+        """Print device information only once."""
+        if self.accelerator and not self._device_info_printed:
             self.accelerator.print("\n=== Accelerator Device Information ===")
             self.accelerator.print(f"Number of processes: {self.accelerator.num_processes}")
             self.accelerator.print(f"Distributed type: {self.accelerator.distributed_type}")
@@ -45,6 +46,7 @@ class BaseExperiment(ABC):
                 device_props = torch.cuda.get_device_properties(i)
                 self.accelerator.print(f"  GPU #{i}: {device_props.name} - Total memory: {device_props.total_memory / 1024**3:.2f} GB")
             self.accelerator.print("=======================================\n")
+            self._device_info_printed = True
     
     def _build_model(self) -> torch.nn.Module:
         """
@@ -162,4 +164,6 @@ class BaseExperiment(ABC):
         self.accelerator = accelerator
         if accelerator:
             self.device = accelerator.device
-            self._print_device_info() 
+            # Only print device info if it hasn't been printed yet
+            if not self._device_info_printed:
+                self._print_device_info() 

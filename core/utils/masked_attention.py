@@ -198,5 +198,5 @@ class Mahalanobis_mask(nn.Module):
         sample = self.bernoulli_gumbel_rsample(p)
 
         mask = sample.unsqueeze(1)
-        cnt = torch.sum(mask, dim=-1)
+
         return mask

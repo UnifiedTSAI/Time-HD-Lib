@@ -1,8 +1,8 @@
 from layers.linear_extractor_cluster import Linear_extractor_cluster
 import torch.nn as nn
 from einops import rearrange
-from utils.masked_attention import Mahalanobis_mask, Encoder, EncoderLayer, FullAttention, AttentionLayer
 import torch
+from core.utils.masked_attention import Mahalanobis_mask, Encoder, EncoderLayer, FullAttention, AttentionLayer
 
 
 class Model(nn.Module):
