@@ -3,7 +3,11 @@ import torch.nn as nn
 from layers.Embed import DataEmbedding
 from layers.ETSformer_EncDec import EncoderLayer, Encoder, DecoderLayer, Decoder, Transform
 
+# Add registry import
+from core.registry import register_model
 
+
+@register_model("ETSformer", paper="ETSformer: Exponential Smoothing Transformers for Time-series Forecasting", year=2022)
 class Model(nn.Module):
     """
     Paper link: https://arxiv.org/abs/2202.01381

@@ -88,9 +88,10 @@ class Dataset_Custom(Dataset):
 
         self.data_x = data[border1:border2]
         self.data_y = data[border1:border2]
-        self.args.accelerator.print("shape of input", self.data_x.shape)
 
-        if self.set_type == 0 and self.args.augmentation_ratio > 0:
+        # Safely handle data augmentation
+        augmentation_ratio = getattr(self.args, 'augmentation_ratio', 0)
+        if self.set_type == 0 and augmentation_ratio > 0:
             self.data_x, self.data_y, augmentation_tags = run_augmentation_single(self.data_x, self.data_y, self.args)
 
         self.data_stamp = data_stamp
@@ -178,7 +179,9 @@ class Dataset_ETT_hour(Dataset):
         self.data_x = data[border1:border2]
         self.data_y = data[border1:border2]
 
-        if self.set_type == 0 and self.args.augmentation_ratio > 0:
+        # Safely handle data augmentation
+        augmentation_ratio = getattr(self.args, 'augmentation_ratio', 0)
+        if self.set_type == 0 and augmentation_ratio > 0:
             self.data_x, self.data_y, augmentation_tags = run_augmentation_single(self.data_x, self.data_y, self.args)
 
         self.data_stamp = data_stamp
@@ -273,7 +276,9 @@ class Dataset_ETT_minute(Dataset):
         self.data_x = data[border1:border2]
         self.data_y = data[border1:border2]
 
-        if self.set_type == 0 and self.args.augmentation_ratio > 0:
+        # Safely handle data augmentation
+        augmentation_ratio = getattr(self.args, 'augmentation_ratio', 0)
+        if self.set_type == 0 and augmentation_ratio > 0:
             self.data_x, self.data_y, augmentation_tags = run_augmentation_single(self.data_x, self.data_y, self.args)
 
         self.data_stamp = data_stamp

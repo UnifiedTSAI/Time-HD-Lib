@@ -158,8 +158,7 @@ class Mahalanobis_mask(nn.Module):
 
         # exp_dist = torch.exp(-dist)
         exp_dist = 1 / (dist + 1e-10)
-        # 对角线置零
-
+        # Set diagonal elements to zero
         identity_matrices = 1 - torch.eye(exp_dist.shape[-1])
         mask = identity_matrices.repeat(exp_dist.shape[0], 1, 1).to(exp_dist.device)
         exp_dist = torch.einsum("bxc,bxc->bxc", exp_dist, mask)
@@ -195,7 +194,7 @@ class Mahalanobis_mask(nn.Module):
     def forward(self, X):
         p = self.calculate_prob_distance(X)
 
-        # bernoulli中两个通道有关系的概率
+        # Probability of correlation between two channels in Bernoulli distribution
         sample = self.bernoulli_gumbel_rsample(p)
 
         mask = sample.unsqueeze(1)

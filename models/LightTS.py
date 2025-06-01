@@ -1,6 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from layers.RevIN import RevIN
+import numpy as np
+
+# Add registry import
+from core.registry import register_model
 
 
 class IEBlock(nn.Module):
@@ -36,6 +41,7 @@ class IEBlock(nn.Module):
         return x
 
 
+@register_model("LightTS", paper="LightTS: Lightweight Time Series Forecasting", year=2023)
 class Model(nn.Module):
     """
     Paper link: https://arxiv.org/abs/2207.01186

@@ -5,6 +5,9 @@ from layers.SelfAttention_Family import DSAttention, AttentionLayer
 from layers.Embed import DataEmbedding
 import torch.nn.functional as F
 
+# Add registry import
+from core.registry import register_model
+
 
 class Projector(nn.Module):
     '''
@@ -39,6 +42,7 @@ class Projector(nn.Module):
         return y
 
 
+@register_model("Nonstationary_Transformer", paper="Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasting", year=2022)
 class Model(nn.Module):
     """
     Paper link: https://openreview.net/pdf?id=ucNDIDRNjjv

@@ -6,11 +6,13 @@ from layers.Crossformer_EncDec import scale_block, Encoder, Decoder, DecoderLaye
 from layers.Embed import PatchEmbedding
 from layers.SelfAttention_Family import AttentionLayer, FullAttention, TwoStageAttentionLayer
 from models.PatchTST import FlattenHead
-
-
 from math import ceil
 
+# Add registry import
+from core.registry import register_model
 
+
+@register_model("Crossformer", paper="Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate Time Series Forecasting", year=2023)
 class Model(nn.Module):
     """
     Paper link: https://openreview.net/pdf?id=vSVLM2j9eie

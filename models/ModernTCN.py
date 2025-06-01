@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import math
 from layers.RevIN import RevIN
 from layers.ModernTCN_Layer import series_decomp, Flatten_Head
+from core.registry import register_model
 
 
 class LayerNorm(nn.Module):
@@ -346,6 +347,7 @@ class ModernTCN(nn.Module):
                 m.merge_kernel()
 
 
+@register_model("ModernTCN", paper="Modern Temporal Convolutional Networks for Time Series Forecasting", year=2024)
 class Model(nn.Module):
     def __init__(self, configs):
         super(Model, self).__init__()

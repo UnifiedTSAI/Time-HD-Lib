@@ -7,7 +7,11 @@ from layers.Autoformer_EncDec import Encoder, Decoder, EncoderLayer, DecoderLaye
 import math
 import numpy as np
 
+# Add registry import
+from core.registry import register_model
 
+
+@register_model("Autoformer", paper="Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting", year=2021)
 class Model(nn.Module):
     """
     Autoformer is the first method to achieve the series-wise connection,

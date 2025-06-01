@@ -1,6 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import numpy as np
+from layers.Embed import DataEmbedding
+
+# Add registry import
+from core.registry import register_model
 
 
 class LayerNorm(nn.Module):
@@ -39,6 +44,7 @@ class ResBlock(nn.Module):
 
 
 #TiDE
+@register_model("TiDE", paper="Long-term Forecasting with TiDE: Time-series Dense Encoder", year=2023)
 class Model(nn.Module):  
     """
     paper: https://arxiv.org/pdf/2304.08424.pdf 

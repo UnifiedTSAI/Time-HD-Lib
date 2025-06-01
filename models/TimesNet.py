@@ -5,6 +5,9 @@ import torch.fft
 from layers.Embed import DataEmbedding
 from layers.Conv_Blocks import Inception_Block_V1
 
+# Add registry import
+from core.registry import register_model
+
 
 def FFT_for_Period(x, k=2):
     # [B, T, C]
@@ -68,6 +71,7 @@ class TimesBlock(nn.Module):
         return res
 
 
+@register_model("TimesNet", paper="TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis", year=2023)
 class Model(nn.Module):
     """
     Paper link: https://openreview.net/pdf?id=ju_Uqw384Oq

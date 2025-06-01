@@ -1,11 +1,17 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from utils.masking import TriangularCausalMask, ProbMask
 from layers.Transformer_EncDec import Decoder, DecoderLayer, Encoder, EncoderLayer, ConvLayer
-from layers.SelfAttention_Family import ProbAttention, AttentionLayer
+from layers.SelfAttention_Family import FullAttention, ProbAttention, AttentionLayer
 from layers.Embed import DataEmbedding
+import numpy as np
+
+# Add registry import
+from core.registry import register_model
 
 
+@register_model("Informer", paper="Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting", year=2021)
 class Model(nn.Module):
     """
     Informer with Propspare attention in O(LlogL) complexity

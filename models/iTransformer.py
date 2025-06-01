@@ -6,7 +6,11 @@ from layers.SelfAttention_Family import FullAttention, AttentionLayer
 from layers.Embed import DataEmbedding_inverted
 import numpy as np
 
+# Add registry import
+from core.registry import register_model
 
+
+@register_model("iTransformer", paper="iTransformer: Inverted Transformers Are Effective for Time Series Forecasting", year=2024)
 class Model(nn.Module):
     """
     Paper link: https://arxiv.org/abs/2310.06625

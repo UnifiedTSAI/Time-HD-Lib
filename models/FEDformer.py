@@ -2,12 +2,19 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from layers.Embed import DataEmbedding
-from layers.AutoCorrelation import AutoCorrelationLayer
+from layers.AutoCorrelation import AutoCorrelation, AutoCorrelationLayer
 from layers.FourierCorrelation import FourierBlock, FourierCrossAttention
 from layers.MultiWaveletCorrelation import MultiWaveletCross, MultiWaveletTransform
 from layers.Autoformer_EncDec import Encoder, Decoder, EncoderLayer, DecoderLayer, my_Layernorm, series_decomp
+from layers.SelfAttention_Family import FullAttention, AttentionLayer
+import math
+import numpy as np
+
+# Add registry import
+from core.registry import register_model
 
 
+@register_model("FEDformer", paper="FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting", year=2022)
 class Model(nn.Module):
     """
     FEDformer performs the attention mechanism on frequency domain and achieved O(N) complexity

@@ -2,6 +2,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+# Add registry import
+from core.registry import register_model
 
 # ---------------------------
 # Latent Query Attention
@@ -178,6 +180,7 @@ def covariance_loss(skip_list, lambda_cov=0.1, eps=1e-5):
 # ---------------------------
 # Final Model
 # ---------------------------
+@register_model("UCast", paper="U-Cast: Learning Latent Hierarchical Channel Structure for High-Dimensional Time Series Forecasting", year=2024)
 class Model(nn.Module):
     def __init__(self, configs):
         super(Model, self).__init__()

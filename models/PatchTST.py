@@ -1,8 +1,16 @@
 import torch
-from torch import nn
+import torch.nn as nn
+import torch.nn.functional as F
+import numpy as np
+
 from layers.Transformer_EncDec import Encoder, EncoderLayer
 from layers.SelfAttention_Family import FullAttention, AttentionLayer
 from layers.Embed import PatchEmbedding
+import math
+
+# Add registry import
+from core.registry import register_model
+
 
 class Transpose(nn.Module):
     def __init__(self, *dims, contiguous=False): 
@@ -28,6 +36,7 @@ class FlattenHead(nn.Module):
         return x
 
 
+@register_model("PatchTST", paper="A Time Series is Worth 64 Words: Long-term Forecasting with Transformers", year=2023)
 class Model(nn.Module):
     """
     Paper link: https://arxiv.org/pdf/2211.14730.pdf

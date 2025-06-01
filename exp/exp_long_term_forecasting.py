@@ -204,7 +204,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             }
             all_epoch_metrics.append(epoch_metrics)
             
-            # 使用EarlyStopping同时跟踪最佳验证指标
+            # Use EarlyStopping while tracking best validation metrics
             early_stopping(vali_loss, self.model, path, metrics=epoch_metrics)
             if early_stopping.early_stop:
                 self.accelerator.print("Early stopping")
@@ -212,7 +212,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
             adjust_learning_rate(model_optim, epoch + 1, self.args, accelerator=self.accelerator)
 
-        # 从EarlyStopping获取最佳指标
+        # Get best metrics from EarlyStopping
         best_metrics = early_stopping.get_best_metrics()
         
         # Return the best model metrics along with the path to the best model

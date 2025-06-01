@@ -1,9 +1,14 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import numpy as np
+
+# Add registry import
+from core.registry import register_model
 from layers.Autoformer_EncDec import series_decomp
 
 
+@register_model("DLinear", paper="Are Transformers Effective for Time Series Forecasting?", year=2023)
 class Model(nn.Module):
     """
     Paper link: https://arxiv.org/pdf/2205.13504.pdf

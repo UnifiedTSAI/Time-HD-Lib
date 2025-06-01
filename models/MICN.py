@@ -1,8 +1,14 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
+import torch.fft
 from layers.Embed import DataEmbedding
 from layers.Autoformer_EncDec import series_decomp, series_decomp_multi
-import torch.nn.functional as F
+from layers.Conv_Blocks import Inception_Block_V1
+import numpy as np
+
+# Add registry import
+from core.registry import register_model
 
 
 class MIC(nn.Module):
@@ -105,6 +111,7 @@ class SeasonalPrediction(nn.Module):
         return self.projection(dec)
 
 
+@register_model("MICN", paper="MICN: Multi-scale Local and Global Context Modeling for Long-term Series Forecasting", year=2023)
 class Model(nn.Module):
     """
     Paper link: https://openreview.net/pdf?id=zt53IDUR1U

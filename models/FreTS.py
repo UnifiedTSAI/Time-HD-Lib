@@ -3,7 +3,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
+# Add registry import
+from core.registry import register_model
 
+
+@register_model("FreTS", paper="FreTS: A Simple yet Effective Approach for Representation Learning in Time Series Forecasting", year=2023)
 class Model(nn.Module):
     """
     Paper link: https://arxiv.org/pdf/2311.06184.pdf

@@ -2,7 +2,11 @@ import torch
 import torch.nn as nn
 from layers.Pyraformer_EncDec import Encoder
 
+# Add registry import
+from core.registry import register_model
 
+
+@register_model("Pyraformer", paper="Pyraformer: Low-Complexity Pyramidal Attention for Long-Range Time Series Modeling and Forecasting", year=2021)
 class Model(nn.Module):
     """ 
     Pyraformer: Pyramidal attention to reduce complexity

@@ -6,7 +6,11 @@ from layers.SelfAttention_Family import FullAttention, AttentionLayer
 from layers.Embed import DataEmbedding
 import numpy as np
 
+# Add registry import
+from core.registry import register_model
 
+
+@register_model("Transformer", paper="Attention is All You Need", year=2017)
 class Model(nn.Module):
     """
     Vanilla Transformer

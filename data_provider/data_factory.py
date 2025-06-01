@@ -19,7 +19,7 @@ data_dict = {
 }
 
 
-def data_provider(args, flag):
+def data_provider(args, flag, accelerator=None):
     if args.data in data_dict.keys():
         Data = data_dict[args.data]
     else:
@@ -44,7 +44,9 @@ def data_provider(args, flag):
         freq=freq,
         seasonal_patterns=args.seasonal_patterns
     )
-    args.accelerator.print(flag, len(data_set))
+
+    accelerator.print(flag, len(data_set))
+
     data_loader = DataLoader(
         data_set,
         batch_size=batch_size,
@@ -52,4 +54,5 @@ def data_provider(args, flag):
         num_workers=args.num_workers,
         drop_last=drop_last,
         pin_memory=True)
+    
     return data_set, data_loader

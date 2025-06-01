@@ -2,8 +2,14 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from layers.Autoformer_EncDec import series_decomp
+from layers.Embed import DataEmbedding
+import numpy as np
+
+# Add registry import
+from core.registry import register_model
 
 
+@register_model("SegRNN", paper="SegRNN: Segment Recurrent Neural Network for Long-Term Time Series Forecasting", year=2023)
 class Model(nn.Module):
     """
     Paper link: https://arxiv.org/abs/2308.11200.pdf
