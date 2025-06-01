@@ -1,0 +1,94 @@
+Neurolib:
+  enc_in: 2000
+  train_epochs: 10
+  dropout: 0.9
+
+Solar:
+  enc_in: 5162
+  train_epochs: 10
+  dropout: 0.9
+
+Atec:
+  enc_in: 1569
+  train_epochs: 10
+  dropout: 0.9
+
+Meter:
+  enc_in: 2898
+  train_epochs: 10
+  dropout: 0.9
+
+Temp:
+  enc_in: 3774
+  train_epochs: 10
+  dropout: 0.9
+
+Wind:
+  enc_in: 3696
+  train_epochs: 10
+  dropout: 0.9
+
+Traffic-CA:
+  enc_in: 7491
+  train_epochs: 10
+  dropout: 0.9
+
+Traffic-GLA:
+  enc_in: 3376
+  train_epochs: 10
+  dropout: 0.9
+
+Traffic-GBA:
+  enc_in: 2229
+  train_epochs: 10
+  dropout: 0.9
+
+Air Quality:
+  enc_in: 1105
+  train_epochs: 10
+  dropout: 0.9
+
+SIRS:
+  enc_in: 2994
+  train_epochs: 10
+  dropout: 0.9
+
+SP500:
+  enc_in: 1475
+  train_epochs: 10
+  dropout: 0.9
+
+M5:
+  enc_in: 3049
+  train_epochs: 10
+  dropout: 0.9
+
+Measles:
+  enc_in: 1161
+  train_epochs: 10
+  dropout: 0.9
+
+Wiki:
+  enc_in: 112333
+  train_epochs: 10
+  dropout: 0.9
+
+Mobility:
+  enc_in: 5826
+  train_epochs: 10
+  dropout: 0.9
+
+Rebound:
+  enc_in: 6000
+  train_epochs: 10
+  dropout: 0.9
+
+Wiki-2k:
+  enc_in: 2000
+  train_epochs: 10
+  dropout: 0.9
+
+Wiki-20k:
+  enc_in: 20000
+  train_epochs: 10
+  dropout: 0.9

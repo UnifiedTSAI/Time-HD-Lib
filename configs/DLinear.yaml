@@ -1,0 +1,75 @@
+Neurolib:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Solar:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Atec:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Meter:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Temp:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Wind:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Traffic-CA:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Traffic-GLA:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Traffic-GBA:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Air Quality:
+  learning_rate: 0.001
+  train_epochs: 10
+
+SIRS:
+  learning_rate: 0.001
+  train_epochs: 10
+
+SP500:
+  learning_rate: 0.001
+  train_epochs: 10
+
+M5:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Measles:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Wiki:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Mobility:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Rebound:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Wiki-2k:
+  learning_rate: 0.001
+  train_epochs: 10
+
+Wiki-20k:
+  learning_rate: 0.001
+  train_epochs: 10

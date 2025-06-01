@@ -1,0 +1,132 @@
+Neurolib:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2000
+
+Solar:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 5162
+
+Atec:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 1569
+
+Meter:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2898
+
+Temp:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 3774
+
+Wind:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 3696
+
+Traffic-CA:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 7491
+
+Traffic-GLA:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 3376
+
+Traffic-GBA:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2229
+
+Air Quality:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 1105
+
+SIRS:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2994
+
+SP500:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 1475
+
+M5:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 3049
+
+Measles:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 1161
+
+Wiki:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 112333
+
+Mobility:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 5826
+
+Rebound:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 6000
+
+Wiki-2k:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 2000
+
+Wiki-20k:
+  learning_rate: 0.001
+  d_model: 512
+  d_ff: 512
+  train_epochs: 10
+  enc_in: 20000

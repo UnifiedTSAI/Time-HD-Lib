@@ -1,0 +1,208 @@
+Neurolib:
+  enc_in: 2000
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Solar:
+  enc_in: 5162
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Atec:
+  enc_in: 1569
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Meter:
+  enc_in: 2898
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Temp:
+  enc_in: 3774
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Wind:
+  enc_in: 3696
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Traffic-CA:
+  enc_in: 7491
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Traffic-GLA:
+  enc_in: 3376
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Traffic-GBA:
+  enc_in: 2229
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 3
+  down_sampling_layers: 3
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Air Quality:
+  enc_in: 1105
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+SIRS:
+  enc_in: 2994
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+SP500:
+  enc_in: 1475
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+M5:
+  enc_in: 3049
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 3
+  down_sampling_layers: 3
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Measles:
+  enc_in: 1161
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Wiki:
+  enc_in: 112333
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 1
+  down_sampling_layers: 3
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Mobility:
+  enc_in: 5826
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Rebound:
+  enc_in: 6000
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Wiki-2k:
+  enc_in: 2000
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
+
+Wiki-20k:
+  enc_in: 20000
+  train_epochs: 10
+  learning_rate: 0.001
+  d_model: 32
+  d_ff: 64
+  e_layers: 2
+  down_sampling_layers: 1
+  down_sampling_window: 2
+  down_sampling_method: avg
