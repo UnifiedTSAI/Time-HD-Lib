@@ -276,7 +276,7 @@ accelerate launch run.py --model UCast --data "Measles" --batch_size 64
 # Framework automatically reduces to batch_size=1 if needed
 
 # Mixed precision training
-accelerate launch --mixed_precision fp8 run.py --model UCast --data "Measles"
+accelerate launch --mixed_precision fp16 run.py --model UCast --data "Measles"
 
 # Gradient checkpointing for large models
 # Automatically enabled for models with >100M parameters
