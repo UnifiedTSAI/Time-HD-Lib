@@ -544,29 +544,28 @@ accelerate launch run.py --model UCast --data your_dataset --hyper_parameter_sea
 
 ### 📁 Output Structure
 ```
-results/
-   └── UCast_ETTh1_Exp_20241201_143022/
-       ├── metrics.npy              # [mae, mse, rmse, mape, mspe]
-       ├── pred.npy                 # Model predictions
-       ├── true.npy                 # Ground truth values
-test_results/
-   └── UCast_ETTh1_Exp_20241201_143022/
-       ├── 0.pdf                # Visualization plots
-       ├── 20.pdf
-       └── ...
-hp_logs/                     # Hyperparameter search results
-    └── UCast_ETTh1_20241201_143022/
-        ├── best_result.json
-        ├── hp_summary.json
-        └── results.csv
+Time-HD-Lib/
+├── 📊 results/                          # Main experiment results
+│   └── long_term_forecast_{model}_{dataset}_slxxx_plxxx/
+│       ├── metrics.npy                  # Final test metrics [mae, mse, rmse, mape, mspe]
+│       ├── pred.npy                     # Model predictions [batch, pred_len, features]
+│       └── true.npy                     # Ground truth values [batch, pred_len, features]
+│
+├── 🎯 test_results/                     # Visualization and detailed analysis
+│   └── long_term_forecast_{model}_{dataset}_slxxx_plxxx/
+│       ├── 0.pdf                        # Sample prediction plots (feature 0)
+│       ├── 20.pdf                       # Sample prediction plots (feature 20)
+│       └── ...
+│
+├── 🔍 hp_logs/                          # Hyperparameter search results
+│   └── {model}_{dataset}_{timestamp}/
+│       ├── best_result.json             # Best configuration and performance
+│       ├── hp_summary.json              # Summary of all tested configurations
+│       └── results.csv                  # All results in tabular format
 ```
-
-
-
-
 ## 📝 Citation
 
-If you use Time-HD-Lib in your research, please cite:
+If you use Time-HD-Lib or Time-HD benchmark in your research, please cite:
 
 ```bibtex
 @article{ucast_2024,
