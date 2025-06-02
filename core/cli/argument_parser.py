@@ -51,7 +51,7 @@ def create_argument_parser() -> argparse.ArgumentParser:
                         help='Input sequence length (lookback window)')
     parser.add_argument('--label_len', type=int, default=0, 
                         help='Start token length for decoder models')
-    parser.add_argument('--pred_len', type=int, default=96, 
+    parser.add_argument('--pred_len', type=int, default=None,
                         help='Prediction sequence length (forecast horizon)')
     parser.add_argument('--seasonal_patterns', type=str, default='Monthly', 
                         help='Seasonal patterns for M4 dataset')

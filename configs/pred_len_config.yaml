@@ -1,0 +1,35 @@
+# Prediction length configuration for different datasets
+# Each dataset maps to a list of prediction lengths to use
+# For single experiments, the first value in the list is used as default
+# For hyperparameter search, all values in the list are tested
+
+# High-dimensional Time-HD datasets
+Neurolib: [336]
+Solar: [336]  # nrel_solar_power
+Atec: [336]
+Meter: [336]  # smart_meters_in_london
+Temp: [168]   # global_temp
+Wind: [168]   # global_wind
+Traffic-CA: [168]   # largest_ca
+Traffic-GLA: [168]  # largest_gla
+Traffic-GBA: [168]  # largest_gba
+"Air Quality": [28]  # chinese_air_quality
+SIRS: [7]     # sirs
+SP500: [7]    # sp500
+M5: [7]       # m5
+Measles: [7]  # measles_england
+Wiki: [7]     # wikipedia_web_traffic
+Wiki-2k: [7]  # wikipedia_web_traffic_2000
+Wiki-20k: [7] # wikipedia_web_traffic_20000
+Mobility: [7] # google_community_mobility
+Rebound: [7]  # rebound
+
+# Traditional benchmarks
+ETTh1: [96, 192, 336, 720]
+ETTh2: [96, 192, 336, 720]
+ETTm1: [96, 192, 336, 720]
+ETTm2: [96, 192, 336, 720]
+Weather: [96, 192, 336, 720]
+Traffic: [96, 192, 336, 720]
+ECL: [96, 192, 336, 720]
+Electricity: [96, 192, 336, 720]

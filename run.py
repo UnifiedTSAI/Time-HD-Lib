@@ -71,7 +71,7 @@ def run_hyperparameter_search(accelerator, args):
         return
         
     # Load prediction length configuration
-    pred_len_config_path = 'config_hp/pred_len_config.yaml'
+    pred_len_config_path = 'configs/pred_len_config.yaml'
     if os.path.exists(pred_len_config_path):
         with open(pred_len_config_path, 'r') as f:
             pred_len_config = yaml.safe_load(f)
@@ -381,6 +381,15 @@ def main():
         
         run_hyperparameter_search(accelerator, args)
         return
+
+    # Load pred_len from config file if not specified via command line
+    if args.pred_len is None:
+        import yaml
+        pred_len_config_path = 'configs/pred_len_config.yaml'
+        with open(pred_len_config_path, 'r') as f:
+            pred_len_config = yaml.safe_load(f)
+        
+        args.pred_len = pred_len_config[args.data][0]
 
     if args.seq_len is None:
         args.seq_len = args.pred_len * args.seq_len_factor
