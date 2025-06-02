@@ -553,15 +553,15 @@ Time-HD-Lib/
 │
 ├── 🎯 test_results/                     # Visualization and detailed analysis
 │   └── long_term_forecast_{model}_{dataset}_slxxx_plxxx/
-│       ├── 0.pdf                        # Sample prediction plots (feature 0)
-│       ├── 20.pdf                       # Sample prediction plots (feature 20)
-│       └── ...
+│       ├── 0.pdf                        # Prediction plots for feature 0
+│       ├── 20.pdf                       # Prediction plots for feature 20
+│       └── ...                          # Additional feature visualizations
 │
-├── 🔍 hp_logs/                          # Hyperparameter search results
-│   └── {model}_{dataset}_{timestamp}/
-│       ├── best_result.json             # Best configuration and performance
-│       ├── hp_summary.json              # Summary of all tested configurations
-│       └── results.csv                  # All results in tabular format
+└── 🔍 hp_logs/                          # Hyperparameter search results
+    └── {model}_{dataset}_{timestamp}/
+        ├── best_result.json             # Best configuration and performance metrics
+        ├── hp_summary.json              # Summary of all tested configurations
+        └── results.csv                  # All results in tabular format
 ```
 ## 📝 Citation
 
