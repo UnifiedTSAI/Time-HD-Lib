@@ -468,37 +468,6 @@ Time-HD-Lib expects datasets to follow a standardized format:
 9999 2021-02-23 07:00:00   0.123        1.789      -0.987    ...       1.567
 ```
 
-**Implementation Example:**
-```python
-# prepare_dataset.py
-import pandas as pd
-import numpy as np
-from datasets import Dataset
-from huggingface_hub import HfApi
-
-# Prepare your time series data
-# Data format: [time_steps, features]
-data = np.random.randn(10000, 500)  # Example: 10000 time steps, 500 features
-dates = pd.date_range('2020-01-01', periods=10000, freq='H')
-
-# Create DataFrame with STANDARD FORMAT
-# 🚨 IMPORTANT: First column must be 'date', followed by feature columns
-df = pd.DataFrame(data, columns=[f'feature_{i}' for i in range(500)])
-df['date'] = dates
-
-# 📋 Reorder columns: date first, then all features
-df = df[['date'] + [f'feature_{i}' for i in range(500)]]
-
-# ✅ Verify format
-print("Dataset shape:", df.shape)
-print("Columns:", df.columns.tolist()[:5], "...")  # First 5 columns
-print("Sample data:")
-print(df.head(3))
-
-# Save as CSV
-df.to_csv('./your_dataset.csv', index=False)
-```
-
 **🔧 Format Requirements:**
 - **Time Column**: Must be named `'date'` and contain valid timestamps
 - **Feature Naming**: Can use any naming convention (e.g., `feature_0`, `sensor_1`, `temperature`)
@@ -574,10 +543,10 @@ accelerate launch run.py --model UCast --data your_dataset --hyper_parameter_sea
 ### 📁 Output Structure
 ```
 results/
-├── UCast_ETTh1_Exp_20241201_143022/
-│   ├── metrics.npy              # [mae, mse, rmse, mape, mspe]
-│   ├── pred.npy                 # Model predictions
-│   ├── true.npy                 # Ground truth values
+   └── UCast_ETTh1_Exp_20241201_143022/
+       ├── metrics.npy              # [mae, mse, rmse, mape, mspe]
+       ├── pred.npy                 # Model predictions
+       ├── true.npy                 # Ground truth values
 test_results/
    └── UCast_ETTh1_Exp_20241201_143022/
        ├── 0.pdf                # Visualization plots
@@ -598,8 +567,6 @@ hp_logs/                     # Hyperparameter search results
 If you use Time-HD-Lib in your research, please cite:
 
 ```bibtex
-
-}
 @article{ucast_2024,
     title = {Are We Overlooking the Dimensions? Learning Latent Hierarchical Channel Structure for High-Dimensional Time Series Forecasting},
     author = {Juntong Ni, Shiyu Wang, Zewen Liu, Xiaoming Shi, Xinyue Zhong, Zhou Ye, Wei Jin},
@@ -634,8 +601,6 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 - **📧 Issues**: [GitHub Issues](https://github.com/your-org/Time-HD-Lib/issues)
 - **💬 Discussions**: [GitHub Discussions](https://github.com/your-org/Time-HD-Lib/discussions)  
-- **📖 Documentation**: [Full Documentation](https://your-org.github.io/Time-HD-Lib)
-- **🐦 Updates**: Follow us on [Twitter](https://twitter.com/your-handle)
 
 ---
 
