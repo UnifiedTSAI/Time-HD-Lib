@@ -21,6 +21,11 @@ A comprehensive, production-ready framework for high-dimensional time series for
 
 ## 📋 Supported Models (20+)
 
+### 🎯 High-Dimensional Specialized
+| Model | Year | Paper | Description |
+|-------|------|-------|-------------|
+| **UCast** | 2025 | [Learning Latent Hierarchical Channel Structure](https://arxiv.org/abs/placeholder) | High-dimensional forecasting |
+
 ### 🏛️ Transformer-Based Models
 | Model | Year | Paper | Description |
 |-------|------|-------|-------------|
@@ -48,10 +53,7 @@ A comprehensive, production-ready framework for high-dimensional time series for
 | **SegRNN** | 2023 | [Segment Recurrent Neural Network](https://arxiv.org/abs/2308.11200) | Segment-based RNN |
 | **LightTS** | 2023 | [Lightweight Time Series](https://arxiv.org/abs/2207.01186) | Efficient forecasting |
 
-### 🎯 High-Dimensional Specialized
-| Model | Year | Paper | Description |
-|-------|------|-------|-------------|
-| **UCast** | 2025 | [Learning Latent Hierarchical Channel Structure](https://arxiv.org/abs/placeholder) | High-dimensional forecasting |
+
 
 ## 🚀 Quick Start
 
