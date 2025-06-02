@@ -258,13 +258,13 @@ accelerate launch --num_processes=1 run.py --model UCast --data "Measles" --gpu 
 accelerate launch --multi_gpu --main_process_port 29500 run.py --model UCast --data "Measles"
 ```
 
-### 3. Automatic Batch Size Finding
+### 3. Automatic Batch Size Finding during Hyperparameter Searching
 
-The framework automatically finds the maximum available batch size:
+The framework automatically finds the maximum available batch size during hyperparameter searching:
 
 ```bash
 # Start from batch size 64, automatically reduce to 32, 16, 8, 4, 2, 1 when encountering OOM
-accelerate launch run.py --model UCast --data "Measles" --batch_size 64
+accelerate launch run.py --model UCast --data "Measles" --batch_size 64 --hyper_parameter_searching
 ```
 
 Manual batch size control:
@@ -273,7 +273,7 @@ Manual batch size control:
 Measles:
   batch_size: 16  # Set smaller batch size for high-dimensional data
   
-Air_Quality:
+Wiki-20k:
   batch_size: 8   # Use even smaller batch size for ultra-high-dimensional data
 ```
 
@@ -281,9 +281,7 @@ Air_Quality:
 
 #### Enable Mixed Precision
 ```bash
-# Method 1: Through accelerate configuration
 accelerate launch --mixed_precision fp16 run.py --model UCast --data "Measles"
-
 ```
 
 
@@ -451,6 +449,26 @@ accelerate launch run.py --model YourNewModel --data "Measles" --hyper_parameter
 ### 2. Adding New Datasets (Upload to HuggingFace)
 
 #### Step 1: Prepare Dataset
+
+**📊 Standard Dataset Format**
+
+Time-HD-Lib expects datasets to follow a standardized format:
+- **📅 Date Column**: First column named `'date'` containing timestamps
+- **📈 Feature Columns**: Remaining columns represent different features/dimensions  
+- **⏰ Row Structure**: Each row represents one time step/timestamp
+- **📋 Column Order**: `['date', 'feature_0', 'feature_1', ..., 'feature_n']`
+
+**Example Dataset Structure:**
+```
+        date          feature_0    feature_1    feature_2    ...    feature_499
+0    2020-01-01 00:00:00   0.234       -1.456       0.789    ...       2.341
+1    2020-01-01 01:00:00  -0.567        0.891      -0.234    ...      -1.234  
+2    2020-01-01 02:00:00   1.234       -0.567       1.456    ...       0.567
+...               ...        ...          ...         ...    ...         ...
+9999 2021-02-23 07:00:00   0.123        1.789      -0.987    ...       1.567
+```
+
+**Implementation Example:**
 ```python
 # prepare_dataset.py
 import pandas as pd
@@ -463,52 +481,35 @@ from huggingface_hub import HfApi
 data = np.random.randn(10000, 500)  # Example: 10000 time steps, 500 features
 dates = pd.date_range('2020-01-01', periods=10000, freq='H')
 
-# Create DataFrame
+# Create DataFrame with STANDARD FORMAT
+# 🚨 IMPORTANT: First column must be 'date', followed by feature columns
 df = pd.DataFrame(data, columns=[f'feature_{i}' for i in range(500)])
 df['date'] = dates
+
+# 📋 Reorder columns: date first, then all features
 df = df[['date'] + [f'feature_{i}' for i in range(500)]]
+
+# ✅ Verify format
+print("Dataset shape:", df.shape)
+print("Columns:", df.columns.tolist()[:5], "...")  # First 5 columns
+print("Sample data:")
+print(df.head(3))
 
 # Save as CSV
 df.to_csv('./your_dataset.csv', index=False)
 ```
 
-#### Step 2: Upload to HuggingFace
-```python
-# upload_to_hf.py
-from huggingface_hub import HfApi, HfFolder
-from datasets import Dataset, DatasetDict
-import pandas as pd
+**🔧 Format Requirements:**
+- **Time Column**: Must be named `'date'` and contain valid timestamps
+- **Feature Naming**: Can use any naming convention (e.g., `feature_0`, `sensor_1`, `temperature`)
+- **Data Types**: Numeric values for features, datetime for date column
+- **Missing Values**: Handle NaN values before uploading (interpolate or remove)
+- **Frequency**: Consistent time intervals (hourly, daily, etc.)
 
-# Login to HuggingFace (need to get token first)
-# huggingface-cli login
+#### Step 2: Upload to HuggingFace (https://huggingface.co/datasets/Time-HD-Anonymous/High_Dimensional_Time_Series)
 
-# Read data
-df = pd.read_csv('./your_dataset.csv')
 
-# Split dataset
-total_len = len(df)
-train_len = int(0.7 * total_len)
-val_len = int(0.1 * total_len)
-
-train_df = df[:train_len]
-val_df = df[train_len:train_len+val_len] 
-test_df = df[train_len+val_len:]
-
-# Create Dataset objects
-dataset_dict = DatasetDict({
-    'train': Dataset.from_pandas(train_df),
-    'validation': Dataset.from_pandas(val_df),
-    'test': Dataset.from_pandas(test_df)
-})
-
-# Upload to HuggingFace Hub
-dataset_dict.push_to_hub(
-    "your-username/your-dataset-name",
-    token="your_hf_token"
-)
-```
-
-#### Step 3: Add Dataset Support in Framework
+#### Step 3: Add Dataset Support in Framework or use Dataset_Custom
 ```python
 # core/data/data_loader.py - Add new dataset class
 class Dataset_YourDataset(Dataset):
@@ -577,105 +578,33 @@ results/
 │   ├── metrics.npy              # [mae, mse, rmse, mape, mspe]
 │   ├── pred.npy                 # Model predictions
 │   ├── true.npy                 # Ground truth values
-│   └── checkpoint.pth           # Best model weights
-├── test_results/
-│   └── UCast_ETTh1_Exp_20241201_143022/
-│       ├── 0.pdf                # Visualization plots
-│       ├── 20.pdf
-│       └── ...
-└── hp_logs/                     # Hyperparameter search results
+test_results/
+   └── UCast_ETTh1_Exp_20241201_143022/
+       ├── 0.pdf                # Visualization plots
+       ├── 20.pdf
+       └── ...
+hp_logs/                     # Hyperparameter search results
     └── UCast_ETTh1_20241201_143022/
         ├── best_result.json
         ├── hp_summary.json
         └── results.csv
 ```
 
-### 📈 Results Analysis
-```python
-import numpy as np
-import pandas as pd
-import json
 
-# Load hyperparameter search results
-with open('hp_logs/UCast_ETTh1_20241201_143022/best_result.json', 'r') as f:
-    best_config = json.load(f)
 
-print(f"Best hyperparameters: {best_config['hyperparameters']}")
-print(f"Best validation loss: {best_config['avg_vali_loss']:.6f}")
-
-# Load model predictions
-pred = np.load('results/UCast_ETTh1_Exp_20241201_143022/pred.npy')
-true = np.load('results/UCast_ETTh1_Exp_20241201_143022/true.npy')
-metrics = np.load('results/UCast_ETTh1_Exp_20241201_143022/metrics.npy')
-
-mae, mse, rmse, mape, mspe = metrics
-print(f"Final test results: MSE={mse:.6f}, MAE={mae:.6f}")
-```
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-**🔥 CUDA Out of Memory**
-```bash
-# Use automatic batch size finding
-accelerate launch run.py --model UCast --data "Air_Quality" --batch_size 64
-# Framework automatically reduces to batch_size=1 if needed
-
-# Enable gradient checkpointing
-# Add to model config:
-use_checkpoint: true
-```
-
-**🐌 Slow Training**
-```bash
-# Enable mixed precision
-accelerate launch run.py --model TimesNet --data ETTh1 --use_amp
-
-# Reduce sequence length for large datasets
---seq_len_factor 3  # instead of default 4
-```
-
-**📉 Poor Performance**
-```bash
-# Check data normalization
---use_norm 1  # Enable normalization
-
-# Try different learning rates
---learning_rate 0.0001  # Start conservative
-
-# Increase model capacity
---d_model 512 --e_layers 3
-```
-
-**🚫 Model Registration Issues**
-```python
-# Ensure @register_model decorator is used
-from core.registry import register_model
-
-@register_model("YourModel", paper="Title", year=2024)
-class Model(nn.Module):  # Must be named "Model"
-    pass
-```
 
 ## 📝 Citation
 
 If you use Time-HD-Lib in your research, please cite:
 
 ```bibtex
-@software{time_hd_lib_2024,
-    title = {Time-HD-Lib: A Library for High-Dimensional Time Series Forecasting},
-    author = {Your Name and Contributors},
-    year = {2024},
-    url = {https://github.com/your-org/Time-HD-Lib},
-    version = {1.0.0}
-}
 
+}
 @article{ucast_2024,
-    title = {U-Cast: Learning Latent Hierarchical Channel Structure for High-Dimensional Time Series Forecasting},
-    author = {Your Name and Co-authors},
-    journal = {Your Journal},
-    year = {2024}
+    title = {Are We Overlooking the Dimensions? Learning Latent Hierarchical Channel Structure for High-Dimensional Time Series Forecasting},
+    author = {Juntong Ni, Shiyu Wang, Zewen Liu, Xiaoming Shi, Xinyue Zhong, Zhou Ye, Wei Jin},
+    journal = {In Submission},
+    year = {2025}
 }
 ```
 
