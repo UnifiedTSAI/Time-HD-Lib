@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import math
 import csv
+import json
 
 plt.switch_backend('agg')
 
@@ -114,6 +115,9 @@ class EarlyStopping:
     def get_best_metrics(self):
         """Return the best validation metrics"""
         return self.best_metrics
+    
+    def get_checkpoint_path(self):
+        return getattr(self, "checkpoint_file", None)
 
 
 class dotdict(dict):

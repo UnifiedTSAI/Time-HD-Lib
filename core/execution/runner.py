@@ -141,7 +141,7 @@ class ExperimentRunner:
             
             # Test with the best trained model
             self.accelerator.print(f'>>> Starting testing for {setting} <<<')
-            mse, mae = experiment.test(setting, test=1)
+            mse, mae = experiment.test(setting, best_model_path)
             
             results['testing'] = {
                 'mse': mse,
@@ -151,7 +151,7 @@ class ExperimentRunner:
         else:
             # Testing only mode
             self.accelerator.print(f'>>> Starting testing for {setting} <<<')
-            mse, mae = experiment.test(setting, test=1)
+            mse, mae = experiment.test(setting)
             
             results['testing'] = {
                 'mse': mse,

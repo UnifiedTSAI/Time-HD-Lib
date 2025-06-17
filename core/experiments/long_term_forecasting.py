@@ -110,8 +110,8 @@ class LongTermForecastingExperiment(BaseExperiment):
         early_stopping = EarlyStopping(patience=self.config.patience, verbose=True, accelerator=self.accelerator)
         
         # Prepare components for distributed training with accelerator
-        self.model, self.optimizer, train_loader, vali_loader = self.accelerator.prepare(
-            self.model, self.optimizer, train_loader, vali_loader
+        self.model, self.optimizer, train_loader, vali_loader, test_loader = self.accelerator.prepare(
+            self.model, self.optimizer, train_loader, vali_loader, test_loader
         )
         
         # Main training loop
@@ -196,38 +196,44 @@ class LongTermForecastingExperiment(BaseExperiment):
             
             self.accelerator.print(f'Epoch: {epoch+1}, Steps: {train_steps} | Train Loss: {train_loss:.7f} Vali Loss: {vali_loss:.7f} Test Loss: {test_loss:.7f}')
             
-            # Update best performance metrics
+            # Early stopping check (includes saving checkpoint)
+            early_stopping(vali_loss, self.model, path, metrics=epoch_metrics)
+
+            # Update best metrics if current model is better
             if vali_loss < best_metrics["vali_loss"]:
                 best_metrics.update(epoch_metrics)
-                # best_model_path will be provided by early_stopping mechanism
-            
-            # Check early stopping condition
-            early_stopping(vali_loss, self.model, path)
+                best_model_path = early_stopping.get_checkpoint_path()
+
+            # Stop if needed
             if early_stopping.early_stop:
                 self.accelerator.print("Early stopping")
                 break
-            
+
             # Adjust learning rate according to schedule
             adjust_learning_rate(self.optimizer, epoch + 1, self.config, self.accelerator)
         
         return all_epoch_metrics, best_metrics, best_model_path
     
-    def test(self, setting: str, test: int = 0) -> Tuple[float, float]:
+    def test(self, setting: str, best_model_path = None) -> Tuple[float, float]:
         """
         Evaluate the trained model on test data.
-        
+
         Args:
-            setting: Experiment setting string for checkpoint loading
-            test: Evaluation mode (0: validation set, 1: test set)
-            
+            setting: Experiment identifier string, used for result saving and fallback checkpoint loading.
+            best_model_path: Path to the model checkpoint. If None, will default to ./checkpoints/{setting}.pth
+
         Returns:
-            Tuple containing (MSE, MAE) evaluation metrics
+            Tuple of (MSE, MAE)
         """
-        test_data, test_loader = self._get_data(flag='test' if test else 'val')
+        test_data, test_loader = self._get_data(flag='test')
         
-        if test:
-            self.accelerator.print('Loading trained model for testing')
-            # Load experiment-specific checkpoint
+        if best_model_path is None:
+            best_model_path = os.path.join(self.config.checkpoints, f"{setting}.pth")
+
+        self.accelerator.print(f'Loading trained model {best_model_path} for testing')
+        self.model.load_state_dict(torch.load(best_model_path))
+        
+        self.model, test_loader = self.accelerator.prepare(self.model, test_loader)
         
         preds = []
         trues = []
@@ -265,12 +271,6 @@ class LongTermForecastingExperiment(BaseExperiment):
                 
                 preds.append(pred)
                 trues.append(true)
-                
-                if i % 20 == 0:
-                    input = batch_x.detach().cpu().numpy()
-                    gt = np.concatenate((input[0, :, -1], true[0, :, -1]), axis=0)
-                    pd = np.concatenate((input[0, :, -1], pred[0, :, -1]), axis=0)
-                    visual(gt, pd, os.path.join(folder_path, str(i) + '.pdf'))
         
         preds = np.concatenate(preds, axis=0)
         trues = np.concatenate(trues, axis=0)

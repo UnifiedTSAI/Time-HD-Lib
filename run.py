@@ -171,6 +171,9 @@ def run_hyperparameter_search(accelerator, args):
                 # Run the experiment
                 results = runner.run()
                 
+                del runner
+                clear_gpu_memory()
+                
                 return results
             
             try:
@@ -286,6 +289,8 @@ def run_hyperparameter_search(accelerator, args):
         
         # Synchronize all distributed processes
         accelerator.wait_for_everyone()
+
+        clear_gpu_memory()
     
     # Find best hyperparameter combination based on validation loss (excluding failed runs)
     valid_results = [r for r in all_results if r["avg_vali_loss"] != float('inf')]
