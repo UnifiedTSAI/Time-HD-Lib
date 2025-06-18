@@ -224,7 +224,6 @@ class LongTermForecastingExperiment(BaseExperiment):
             Tuple of (MSE, MAE)
         """
         test_data, test_loader = self._get_data(flag='test')
-        test_loader.batch_size = min(8, test_loader.batch_size)
         
         if best_model_path is None:
             best_model_path = os.path.join(self.config.checkpoints, f"{setting}.pth")

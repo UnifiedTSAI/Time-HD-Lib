@@ -31,9 +31,15 @@ def run_hyperparameter_search(accelerator, args):
     
     def clear_gpu_memory():
         """Clear GPU memory to avoid out-of-memory errors."""
+        # import gc
+        # torch.cuda.empty_cache()
+        # gc.collect()
         import gc
         torch.cuda.empty_cache()
         gc.collect()
+        torch.cuda.ipc_collect()
+        if torch.distributed.is_initialized():
+            torch.distributed.barrier()
     
     def save_results_to_csv(args, best_result, hp_results_dir):
         """Save hyperparameter search results to CSV file."""
@@ -158,9 +164,6 @@ def run_hyperparameter_search(accelerator, args):
                 hp_args.batch_size = batch_size
                 accelerator.print(f"  Trying batch size: {batch_size}")
                 
-                # Clear memory before each training attempt
-                clear_gpu_memory()
-                
                 # Create experiment runner using the framework
                 runner = create_runner_from_args(hp_args)
                 runner.accelerator = accelerator
@@ -170,9 +173,8 @@ def run_hyperparameter_search(accelerator, args):
                 
                 # Run the experiment
                 results = runner.run()
-                
+
                 del runner
-                clear_gpu_memory()
                 
                 return results
             
@@ -243,10 +245,10 @@ def run_hyperparameter_search(accelerator, args):
                     "error": str(e)
                 }
                 pred_len_results.append(pred_len_result)
-            
-            # Clear memory after each prediction length test
+
+            del results
             clear_gpu_memory()
-        
+            
         # Calculate average metrics across all prediction length values (excluding failed runs)
         valid_results = [r for r in pred_len_results if r["vali_loss"] != float('inf')]
         
