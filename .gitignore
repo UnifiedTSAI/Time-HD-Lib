@@ -187,3 +187,5 @@ download_dataset.py
 run_new.py
 run_old.py
 runners.py
+scripts/slurm.sh
+scripts/submit_slurm.sh

@@ -224,6 +224,7 @@ class LongTermForecastingExperiment(BaseExperiment):
             Tuple of (MSE, MAE)
         """
         test_data, test_loader = self._get_data(flag='test')
+        test_loader.batch_size = min(8, test_loader.batch_size)
         
         if best_model_path is None:
             best_model_path = os.path.join(self.config.checkpoints, f"{setting}.pth")
@@ -236,9 +237,9 @@ class LongTermForecastingExperiment(BaseExperiment):
         
         preds = []
         trues = []
-        folder_path = './test_results/' + setting + '/'
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
+        # folder_path = './test_results/' + setting + '/'
+        # if not os.path.exists(folder_path):
+        #     os.makedirs(folder_path)
         
         self.model.eval()
         with torch.no_grad():
@@ -277,9 +278,9 @@ class LongTermForecastingExperiment(BaseExperiment):
         self.accelerator.print('test shape:', preds.shape, trues.shape)
         
         # Result save
-        folder_path = './results/' + setting + '/'
-        if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
+        # folder_path = './results/' + setting + '/'
+        # if not os.path.exists(folder_path):
+        #     os.makedirs(folder_path)
         
         mae, mse, rmse, mape, mspe = metric(preds, trues)
         self.accelerator.print('mse:{}, mae:{}'.format(mse, mae))
@@ -291,9 +292,9 @@ class LongTermForecastingExperiment(BaseExperiment):
         f.write('\n')
         f.close()
         
-        np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
-        np.save(folder_path + 'pred.npy', preds)
-        np.save(folder_path + 'true.npy', trues)
+        # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
+        # np.save(folder_path + 'pred.npy', preds)
+        # np.save(folder_path + 'true.npy', trues)
         
         return mse, mae
     

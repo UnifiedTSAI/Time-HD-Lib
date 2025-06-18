@@ -4,7 +4,7 @@ declare -A datasets
 
 # datasets['Neurolib']="336"
 # datasets['Solar']="336"
-# datasets['Atec']="336"
+datasets['Atec']="336"
 # datasets['Meter']="336"
 
 # datasets['Temp']="168"
@@ -13,7 +13,7 @@ declare -A datasets
 # datasets['Traffic-GLA']="168"
 # datasets['Traffic-GBA']="168"
 
-datasets['Air Quality']="28"
+# datasets['Air Quality']="28"
 
 # datasets['SIRS']="7"
 # datasets['SP500']="7"
