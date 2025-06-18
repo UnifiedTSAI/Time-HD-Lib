@@ -96,11 +96,12 @@ class EarlyStopping:
         # Extract experiment name from original path for filename
         experiment_name = os.path.basename(path)
         checkpoint_file = os.path.join(checkpoints_dir, f'{experiment_name}.pth')
-        
+
         if self.accelerator:
             model = self.accelerator.unwrap_model(model)
         
         torch.save(model.state_dict(), checkpoint_file)
+        
         self.val_loss_min = val_loss
         
         # Save checkpoint file path for later use

@@ -89,8 +89,6 @@ class LongTermForecastingExperiment(BaseExperiment):
         
         # Setup checkpoint directory
         path = os.path.join(self.config.checkpoints, setting)
-        if not os.path.exists(path):
-            os.makedirs(path, exist_ok=True)
         
         # Initialize performance tracking variables
         all_epoch_metrics = []
@@ -231,8 +229,9 @@ class LongTermForecastingExperiment(BaseExperiment):
             best_model_path = os.path.join(self.config.checkpoints, f"{setting}.pth")
 
         self.accelerator.print(f'Loading trained model {best_model_path} for testing')
-        self.model.load_state_dict(torch.load(best_model_path))
         
+        self.model = self.accelerator.unwrap_model(self.model)
+        self.model.load_state_dict(torch.load(best_model_path))
         self.model, test_loader = self.accelerator.prepare(self.model, test_loader)
         
         preds = []
@@ -313,7 +312,9 @@ class LongTermForecastingExperiment(BaseExperiment):
         
         total_loss = []
         mae_loss = []
-        
+        preds = []
+        trues = []
+
         self.model.eval()
         with torch.no_grad():
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(vali_loader):
@@ -338,15 +339,21 @@ class LongTermForecastingExperiment(BaseExperiment):
                 # Gather for metrics in distributed training
                 outputs, batch_y = self.accelerator.gather_for_metrics((outputs, batch_y))
                 
-                pred = outputs.detach().cpu()
-                true = batch_y.detach().cpu()
+                pred = outputs.detach().cpu().numpy()
+                true = batch_y.detach().cpu().numpy()
                 
-                loss = self.criterion(pred, true)
-                mae_loss.append(nn.L1Loss()(pred, true).item())
-                total_loss.append(loss.item())
+                # loss = self.criterion(pred, true)
+                # mae_loss.append(nn.L1Loss()(pred, true).item())
+                # total_loss.append(loss.item())
+                preds.append(pred)
+                trues.append(true)
         
-        total_loss = np.average(total_loss)
-        mae_loss = np.average(mae_loss)
+        preds = np.concatenate(preds, axis=0)
+        trues = np.concatenate(trues, axis=0)
+
+        # total_loss = np.average(total_loss)
+        # mae_loss = np.average(mae_loss)
+        mae, mse, rmse, mape, mspe = metric(preds, trues)
         
         self.model.train()
-        return total_loss, mae_loss 
+        return mse, mae
