@@ -19,6 +19,22 @@ from core.execution.runner import create_runner_from_args
 def run_hyperparameter_search(accelerator, args):
     """Run hyperparameter search using the framework."""
     
+    # Load dataset-specific default parameters from configs/{model}.yaml
+    dataset_config_path = f'configs/{args.model}.yaml'
+    if os.path.exists(dataset_config_path):
+        import yaml
+        with open(dataset_config_path, 'r') as f:
+            dataset_config = yaml.safe_load(f)
+        if args.data in dataset_config:
+            defaults = dataset_config[args.data]
+            for k, v in defaults.items():
+                setattr(args, k, v)
+            accelerator.print(f"Loaded default parameters for {args.data} from {dataset_config_path}: {defaults}")
+        else:
+            accelerator.print(f"No default parameters found for {args.data} in {dataset_config_path}")
+    else:
+        accelerator.print(f"Dataset config file not found: {dataset_config_path}")
+    
     # Import necessary modules for hyperparameter search
     import yaml
     import copy

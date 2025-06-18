@@ -61,8 +61,6 @@ class ExperimentRunner:
         else:
             self.device = torch.device('cpu')
         
-        # Use accelerator for consistent printing across distributed processes
-        self.accelerator.print(f'Using device: {self.device}')
     
     def _fix_seed(self, seed: int):
         """
