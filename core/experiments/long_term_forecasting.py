@@ -230,8 +230,9 @@ class LongTermForecastingExperiment(BaseExperiment):
 
         self.accelerator.print(f'Loading trained model {best_model_path} for testing')
         
+        # self.model = self._build_model()
         self.model = self.accelerator.unwrap_model(self.model)
-        self.model.load_state_dict(torch.load(best_model_path))
+        self.model.load_state_dict(torch.load(best_model_path, map_location='cpu'))
         self.model, test_loader = self.accelerator.prepare(self.model, test_loader)
         
         preds = []
