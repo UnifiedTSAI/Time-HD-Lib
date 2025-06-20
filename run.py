@@ -261,8 +261,7 @@ def run_hyperparameter_search(accelerator, args):
                     "error": str(e)
                 }
                 pred_len_results.append(pred_len_result)
-
-            del results
+                
             clear_gpu_memory()
             
         # Calculate average metrics across all prediction length values (excluding failed runs)
