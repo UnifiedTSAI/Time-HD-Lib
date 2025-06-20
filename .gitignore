@@ -183,7 +183,6 @@ scripts_slurm
 scripts_local
 exp
 README_old.md
-download_dataset.py
 run_new.py
 run_old.py
 runners.py

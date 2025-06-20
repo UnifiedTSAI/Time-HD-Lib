@@ -1,4 +1,4 @@
 learning_rate: [0.002, 0.001, 0.0005]
 seq_len_factor: [3, 4]
 d_model: [512]
-alpha: [10, 1, 0.1, 0.01, 0.001]
+alpha: [1, 0.1, 0.01, 0.001]
