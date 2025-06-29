@@ -137,6 +137,13 @@ class ExperimentRunner:
                 'best_model_path': best_model_path
             }
             
+            import gc
+            torch.cuda.empty_cache()
+            gc.collect()
+            torch.cuda.ipc_collect()
+            if torch.distributed.is_initialized():
+                torch.distributed.barrier()
+                
             # Test with the best trained model
             self.accelerator.print(f'>>> Starting testing for {setting} <<<')
             mse, mae = experiment.test(setting, best_model_path)

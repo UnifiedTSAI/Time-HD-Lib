@@ -178,8 +178,12 @@ class LongTermForecastingExperiment(BaseExperiment):
             
             # Evaluate model performance
             train_loss = np.average(train_loss)
+            val_time = time.time()
             vali_loss, vali_mae_loss = self.validate(vali_loader)
+            self.accelerator.print(f"Val cost time: {time.time() - val_time:.2f}s")
+            test_time = time.time()
             test_loss, test_mae_loss = self.validate(test_loader)
+            self.accelerator.print(f"Test cost time: {time.time() - test_time:.2f}s")
             
             # Record comprehensive epoch metrics
             epoch_metrics = {
@@ -212,91 +216,123 @@ class LongTermForecastingExperiment(BaseExperiment):
         
         return all_epoch_metrics, best_metrics, best_model_path
     
-    def test(self, setting: str, best_model_path = None) -> Tuple[float, float]:
+    def test(self, setting: str, best_model_path: Optional[str] = None) -> Tuple[float, float]:
         """
-        Evaluate the trained model on test data.
+        Evaluate the trained model on test data using the same aggregation logic as in validate().
 
         Args:
             setting: Experiment identifier string, used for result saving and fallback checkpoint loading.
-            best_model_path: Path to the model checkpoint. If None, will default to ./checkpoints/{setting}.pth
+            best_model_path: Path to the model checkpoint. If None, defaults to ./checkpoints/{setting}.pth
 
         Returns:
-            Tuple of (MSE, MAE)
+            Tuple of (MSE, MAE) on the test set.
         """
-        test_data, test_loader = self._get_data(flag='test')
-        
+        # Determine checkpoint path
         if best_model_path is None:
             best_model_path = os.path.join(self.config.checkpoints, f"{setting}.pth")
 
         self.accelerator.print(f'Loading trained model {best_model_path} for testing')
         
-        # self.model = self._build_model()
+        # Load model weights
         self.model = self.accelerator.unwrap_model(self.model)
         self.model.load_state_dict(torch.load(best_model_path, map_location='cpu'))
+
+        # Get test data loader and prepare for distributed eval
+        _, test_loader = self._get_data(flag='test')
         self.model, test_loader = self.accelerator.prepare(self.model, test_loader)
-        
-        preds = []
-        trues = []
-        # folder_path = './test_results/' + setting + '/'
-        # if not os.path.exists(folder_path):
-        #     os.makedirs(folder_path)
-        
-        self.model.eval()
-        with torch.no_grad():
-            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
-                batch_x = batch_x.float().to(self.device)
-                batch_y = batch_y.float().to(self.device)
-                batch_x_mark = batch_x_mark.float().to(self.device)
-                batch_y_mark = batch_y_mark.float().to(self.device)
-                
-                # Decoder input
-                dec_inp = torch.zeros_like(batch_y[:, -self.config.pred_len:, :]).float()
-                dec_inp = torch.cat([batch_y[:, :self.config.label_len, :], dec_inp], dim=1).float().to(self.device)
-                
-                # Encoder - decoder
-                with self.accelerator.autocast():
-                    outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-                
-                # Handle different output formats
-                if isinstance(outputs, tuple):
-                    outputs = outputs[0]
-                
-                batch_y = batch_y[:, -self.config.pred_len:, :].to(self.device)
-                
-                # Gather for metrics in distributed training
-                outputs, batch_y = self.accelerator.gather_for_metrics((outputs, batch_y))
-                
-                pred = outputs.detach().cpu().numpy()
-                true = batch_y.detach().cpu().numpy()
-                
-                preds.append(pred)
-                trues.append(true)
-        
-        preds = np.concatenate(preds, axis=0)
-        trues = np.concatenate(trues, axis=0)
-        
-        self.accelerator.print('test shape:', preds.shape, trues.shape)
-        
-        # Result save
-        # folder_path = './results/' + setting + '/'
-        # if not os.path.exists(folder_path):
-        #     os.makedirs(folder_path)
-        
-        mae, mse, rmse, mape, mspe = metric(preds, trues)
-        self.accelerator.print('mse:{}, mae:{}'.format(mse, mae))
-        
-        f = open("result_long_term_forecast.txt", 'a')
-        f.write(setting + "  \n")
-        f.write('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
-        f.write('\n')
-        f.write('\n')
-        f.close()
-        
-        # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
-        # np.save(folder_path + 'pred.npy', preds)
-        # np.save(folder_path + 'true.npy', trues)
-        
+
+        # Use validate() to compute MSE and MAE
+        mse, mae = self.validate(test_loader)
+
+        self.accelerator.print(f'Test MSE: {mse:.6f}, Test MAE: {mae:.6f}')
         return mse, mae
+
+
+    # def test(self, setting: str, best_model_path = None) -> Tuple[float, float]:
+    #     """
+    #     Evaluate the trained model on test data.
+
+    #     Args:
+    #         setting: Experiment identifier string, used for result saving and fallback checkpoint loading.
+    #         best_model_path: Path to the model checkpoint. If None, will default to ./checkpoints/{setting}.pth
+
+    #     Returns:
+    #         Tuple of (MSE, MAE)
+    #     """
+    #     test_data, test_loader = self._get_data(flag='test')
+        
+    #     if best_model_path is None:
+    #         best_model_path = os.path.join(self.config.checkpoints, f"{setting}.pth")
+
+    #     self.accelerator.print(f'Loading trained model {best_model_path} for testing')
+        
+    #     # self.model = self._build_model()
+    #     self.model = self.accelerator.unwrap_model(self.model)
+    #     self.model.load_state_dict(torch.load(best_model_path, map_location='cpu'))
+    #     self.model, test_loader = self.accelerator.prepare(self.model, test_loader)
+        
+    #     preds = []
+    #     trues = []
+    #     # folder_path = './test_results/' + setting + '/'
+    #     # if not os.path.exists(folder_path):
+    #     #     os.makedirs(folder_path)
+        
+    #     self.model.eval()
+    #     with torch.no_grad():
+    #         for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(test_loader):
+    #             batch_x = batch_x.float().to(self.device)
+    #             batch_y = batch_y.float().to(self.device)
+    #             batch_x_mark = batch_x_mark.float().to(self.device)
+    #             batch_y_mark = batch_y_mark.float().to(self.device)
+                
+    #             # Decoder input
+    #             dec_inp = torch.zeros_like(batch_y[:, -self.config.pred_len:, :]).float()
+    #             dec_inp = torch.cat([batch_y[:, :self.config.label_len, :], dec_inp], dim=1).float().to(self.device)
+                
+    #             # Encoder - decoder
+    #             with self.accelerator.autocast():
+    #                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
+                
+    #             # Handle different output formats
+    #             if isinstance(outputs, tuple):
+    #                 outputs = outputs[0]
+                
+    #             batch_y = batch_y[:, -self.config.pred_len:, :].to(self.device)
+                
+    #             # Gather for metrics in distributed training
+    #             outputs, batch_y = self.accelerator.gather_for_metrics((outputs, batch_y))
+                
+    #             pred = outputs.detach().cpu().numpy()
+    #             true = batch_y.detach().cpu().numpy()
+                
+    #             preds.append(pred)
+    #             trues.append(true)
+        
+    #     preds = np.concatenate(preds, axis=0)
+    #     trues = np.concatenate(trues, axis=0)
+        
+    #     self.accelerator.print('test shape:', preds.shape, trues.shape)
+        
+    #     # Result save
+    #     # folder_path = './results/' + setting + '/'
+    #     # if not os.path.exists(folder_path):
+    #     #     os.makedirs(folder_path)
+        
+    #     mae, mse, rmse, mape, mspe = metric(preds, trues)
+    #     self.accelerator.print('mse:{}, mae:{}'.format(mse, mae))
+        
+    #     f = open("result_long_term_forecast.txt", 'a')
+    #     f.write(setting + "  \n")
+    #     f.write('mse:{}, mae:{}, rmse:{}, mape:{}, mspe:{}'.format(mse, mae, rmse, mape, mspe))
+    #     f.write('\n')
+    #     f.write('\n')
+    #     f.close()
+        
+    #     # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe]))
+    #     # np.save(folder_path + 'pred.npy', preds)
+    #     # np.save(folder_path + 'true.npy', trues)
+        
+    #     return mse, mae
     
     def validate(self, vali_loader=None) -> Tuple[float, float]:
         """
