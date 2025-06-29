@@ -336,61 +336,60 @@ class LongTermForecastingExperiment(BaseExperiment):
     
     def validate(self, vali_loader=None) -> Tuple[float, float]:
         """
-        Validate the model.
-        
+        Validate the model using distributed metric aggregation to avoid GPU OOM.
+
         Args:
-            vali_loader: Validation data loader (if None, will get validation data)
-            
+            vali_loader: Optional DataLoader for validation data. If None, it will be created internally.
+
         Returns:
-            Tuple of (mse, mae)
+            Tuple of (MSE, MAE)
         """
         if vali_loader is None:
-            vali_data, vali_loader = self._get_data(flag='val')
-        
-        total_loss = []
-        mae_loss = []
-        preds = []
-        trues = []
+            _, vali_loader = self._get_data(flag='val')
+
+        # Initialize distributed accumulators
+        sum_sq_error = torch.tensor(0.0, device=self.device)
+        sum_abs_error = torch.tensor(0.0, device=self.device)
+        total_count = torch.tensor(0.0, device=self.device)
 
         self.model.eval()
         with torch.no_grad():
-            for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(vali_loader):
+            for batch_x, batch_y, batch_x_mark, batch_y_mark in vali_loader:
+                # Move data to device
                 batch_x = batch_x.float().to(self.device)
                 batch_y = batch_y.float().to(self.device)
                 batch_x_mark = batch_x_mark.float().to(self.device)
                 batch_y_mark = batch_y_mark.float().to(self.device)
-                
-                # Decoder input
-                dec_inp = torch.zeros_like(batch_y[:, -self.config.pred_len:, :]).float()
-                dec_inp = torch.cat([batch_y[:, :self.config.label_len, :], dec_inp], dim=1).float().to(self.device)
-                
+
+                # Prepare decoder input
+                dec_inp = torch.zeros_like(batch_y[:, -self.config.pred_len:, :])
+                dec_inp = torch.cat(
+                    [batch_y[:, :self.config.label_len, :], dec_inp], dim=1
+                ).to(self.device)
+
+                # Forward pass
                 with self.accelerator.autocast():
                     outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-                
-                # Handle different output formats
                 if isinstance(outputs, tuple):
                     outputs = outputs[0]
-                
-                batch_y = batch_y[:, -self.config.pred_len:, :].to(self.device)
-                
-                # Gather for metrics in distributed training
-                outputs, batch_y = self.accelerator.gather_for_metrics((outputs, batch_y))
-                
-                pred = outputs.detach().cpu().numpy()
-                true = batch_y.detach().cpu().numpy()
-                
-                # loss = self.criterion(pred, true)
-                # mae_loss.append(nn.L1Loss()(pred, true).item())
-                # total_loss.append(loss.item())
-                preds.append(pred)
-                trues.append(true)
-        
-        preds = np.concatenate(preds, axis=0)
-        trues = np.concatenate(trues, axis=0)
 
-        # total_loss = np.average(total_loss)
-        # mae_loss = np.average(mae_loss)
-        mae, mse, rmse, mape, mspe = metric(preds, trues)
-        
+                # Slice true values
+                true_slice = batch_y[:, -self.config.pred_len:, :]
+
+                # Compute batch errors
+                error = outputs - true_slice
+                sum_sq_error += error.pow(2).sum()
+                sum_abs_error += error.abs().sum()
+                total_count += torch.tensor(error.numel(), device=self.device)
+
+        # Reduce metrics across all devices once
+        sum_sq_error = self.accelerator.reduce(sum_sq_error, reduction="sum")
+        sum_abs_error = self.accelerator.reduce(sum_abs_error, reduction="sum")
+        total_count = self.accelerator.reduce(total_count, reduction="sum")
+
+        # Compute final metrics
+        mse = sum_sq_error / total_count
+        mae = sum_abs_error / total_count
+
         self.model.train()
-        return mse, mae
+        return mse.item(), mae.item()
