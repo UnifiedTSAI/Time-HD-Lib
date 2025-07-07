@@ -27,9 +27,15 @@ def run_hyperparameter_search(accelerator, args):
             dataset_config = yaml.safe_load(f)
         if args.data in dataset_config:
             defaults = dataset_config[args.data]
+            loaded_params = {}
             for k, v in defaults.items():
-                setattr(args, k, v)
-            accelerator.print(f"Loaded default parameters for {args.data} from {dataset_config_path}: {defaults}")
+                if not hasattr(args, k) or getattr(args, k) is None:
+                    setattr(args, k, v)
+                    loaded_params[k] = v
+            if loaded_params:
+                accelerator.print(f"Loaded default parameters for {args.data} from {dataset_config_path}: {loaded_params}")
+            else:
+                accelerator.print(f"All parameters already specified via command line, skipping config file defaults")
         else:
             accelerator.print(f"No default parameters found for {args.data} in {dataset_config_path}")
     else:
@@ -403,6 +409,41 @@ def main():
         
         run_hyperparameter_search(accelerator, args)
         return
+
+    # Load dataset-specific default parameters from configs/{model}.yaml
+    # 优先级：命令行输入 > 配置文件 > args默认值
+    import sys
+    
+    # 获取实际从命令行传入的参数名
+    cmd_line_args = set()
+    for i, arg in enumerate(sys.argv[1:]):
+        if arg.startswith('--'):
+            param_name = arg[2:]
+            cmd_line_args.add(param_name)
+    
+    dataset_config_path = f'configs/{args.model}.yaml'
+    if os.path.exists(dataset_config_path):
+        import yaml
+        with open(dataset_config_path, 'r') as f:
+            dataset_config = yaml.safe_load(f)
+        if args.data in dataset_config:
+            defaults = dataset_config[args.data]
+            loaded_params = {}
+            for k, v in defaults.items():
+                # 只有当参数不是从命令行指定时，才从配置文件读取
+                if k not in cmd_line_args:
+                    setattr(args, k, v)
+                    loaded_params[k] = v
+            if loaded_params:
+                accelerator.print(f"Loaded default parameters for {args.data} from {dataset_config_path}: {loaded_params}")
+            else:
+                accelerator.print(f"All parameters already specified via command line, skipping config file defaults")
+        else:
+            accelerator.print(f"No default parameters found for {args.data} in {dataset_config_path}")
+    else:
+        accelerator.print(f"Dataset config file not found: {dataset_config_path}")
+
+    accelerator.print(f"args.batchsize: {args.batch_size}")
 
     # Load pred_len from config file if not specified via command line
     if args.pred_len is None:
