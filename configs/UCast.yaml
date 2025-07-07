@@ -1,35 +1,35 @@
 Neurolib:
   enc_in: 2000
   train_epochs: 100
-  alpha: 1
+  alpha: 0.001
   seq_len_factor: 4
-  learning_rate: 0.0005
+  learning_rate: 0.002
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 64 # 2*H200
 
 Solar:
   enc_in: 5162
   train_epochs: 100
-  alpha: 1
+  alpha: 0.001
   seq_len_factor: 4
   learning_rate: 0.0005
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 32 # 8*L40
 
 Atec:
   enc_in: 1569
   train_epochs: 100
-  alpha: 1
-  seq_len_factor: 4
-  learning_rate: 0.0005
+  alpha: 0.001
+  seq_len_factor: 3
+  learning_rate: 0.002
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 64 # 2*H100
 
 Meter:
   enc_in: 2898
@@ -40,62 +40,62 @@ Meter:
   d_model: 512
   e_layers: 2
   lradj: type1
-  batch_size: 16
+  batch_size: 64 # 2*H100
 
 Temp:
   enc_in: 3774
   train_epochs: 100
-  alpha: 1
-  seq_len_factor: 4
+  alpha: 0.01
+  seq_len_factor: 3
   learning_rate: 0.0005
   d_model: 512
   e_layers: 2
   lradj: type1
-  batch_size: 16
+  batch_size: 64 # 2*H200
 
 Wind:
   enc_in: 3696
   train_epochs: 100
-  alpha: 1
+  alpha: 0.001
   seq_len_factor: 4
-  learning_rate: 0.0005
+  learning_rate: 0.001
   d_model: 512
   e_layers: 2
   lradj: type1
-  batch_size: 16
+  batch_size: 32 # 8*L40
 
 Traffic-CA:
   enc_in: 7491
   train_epochs: 100
   alpha: 1
   seq_len_factor: 4
-  learning_rate: 0.0005
+  learning_rate: 0.001
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 64 # 2*H100
 
 Traffic-GLA:
   enc_in: 3376
   train_epochs: 100
   alpha: 1
   seq_len_factor: 4
-  learning_rate: 0.0005
+  learning_rate: 0.001
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 64 # 2*H100
 
 Traffic-GBA:
   enc_in: 2229
   train_epochs: 100
-  alpha: 1
+  alpha: 0.01
   seq_len_factor: 4
-  learning_rate: 0.0005
+  learning_rate: 0.001
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 64 # 2*H100
 
 Air Quality:
   enc_in: 1105
@@ -105,8 +105,8 @@ Air Quality:
   learning_rate: 0.0005
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 16 # 8 L40
 
 SIRS:
   enc_in: 2994
@@ -117,92 +117,59 @@ SIRS:
   d_model: 512
   e_layers: 2
   lradj: type3
-  batch_size: 16
+  batch_size: 32 # 4*A100
 
 SP500:
   enc_in: 1475
   train_epochs: 100
   alpha: 1
+  seq_len_factor: 3
+  learning_rate: 0.001
+  d_model: 512
+  e_layers: 2
+  lradj: type3
+  batch_size: 64 # 2*H100
+
+M5:
+  enc_in: 3049
+  train_epochs: 100
+  alpha: 0.1
   seq_len_factor: 4
   learning_rate: 0.0005
   d_model: 512
   e_layers: 2
   lradj: type3
-  batch_size: 16
-
-M5:
-  enc_in: 3049
-  train_epochs: 100
-  alpha: 1
-  seq_len_factor: 4
-  learning_rate: 0.0005
-  d_model: 512
-  e_layers: 2
-  lradj: type1
-  batch_size: 16
+  batch_size: 16 # 8*L40
 
 Measles:
   enc_in: 1161
   train_epochs: 100
-  alpha: 1
-  seq_len_factor: 4
+  alpha: 0.001
+  seq_len_factor: 3
   learning_rate: 0.0005
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
-
-Wiki:
-  enc_in: 112333
-  train_epochs: 100
-  alpha: 1
-  seq_len_factor: 4
-  learning_rate: 0.0005
-  d_model: 512
-  e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 32 # 4*A100
 
 Mobility:
   enc_in: 5826
   train_epochs: 100
-  alpha: 1
+  alpha: 10
   seq_len_factor: 4
-  learning_rate: 0.0005
+  learning_rate: 0.002
   d_model: 512
-  e_layers: 2
+  e_layers: 4
   lradj: type1
-  batch_size: 16
-
-Rebound:
-  enc_in: 6000
-  train_epochs: 100
-  alpha: 1
-  seq_len_factor: 4
-  learning_rate: 0.0005
-  d_model: 512
-  e_layers: 2
-  lradj: type1
-  batch_size: 16
-
-Wiki-2k:
-  enc_in: 2000
-  train_epochs: 100
-  alpha: 1
-  seq_len_factor: 4
-  learning_rate: 0.0005
-  d_model: 512
-  e_layers: 2
-  lradj: type1
-  batch_size: 16
+  batch_size: 32 # 4*A100
 
 Wiki-20k:
   enc_in: 20000
   train_epochs: 100
-  alpha: 1
+  alpha: 10
   seq_len_factor: 4
   learning_rate: 0.0005
   d_model: 512
   e_layers: 2
-  lradj: type1
-  batch_size: 16
+  lradj: type3
+  batch_size: 32 # 4*A100
