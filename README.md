@@ -53,7 +53,25 @@ A comprehensive, production-ready framework for high-dimensional time series for
 | **SegRNN** | 2023 | [Segment Recurrent Neural Network](https://arxiv.org/abs/2308.11200) | Segment-based RNN |
 | **LightTS** | 2023 | [Lightweight Time Series](https://arxiv.org/abs/2207.01186) | Efficient forecasting |
 
+## 📊 Supported Datasets
 
+### 🎯 Time-HD: High-Dimensional Benchmark
+
+<p align="center">
+<img src=".\pic\Time-HD.png" height = "200" alt="" align=center />
+</p>
+
+Our framework supports the **Time-HD** benchmark dataset through HuggingFace Datasets:
+
+<p align="center">
+<img src=".\pic\dataset.png" height = "300" alt="" align=center />
+</p>
+
+### 📈 Traditional Benchmarks
+- **ETT** (ETTh1, ETTh2, ETTm1, ETTm2) - Electricity transformer temperature
+- **Weather** - Multi-variate weather forecasting
+- **Traffic** - Road traffic flow
+- **ECL** - Electricity consuming load
 
 ## 🚀 Quick Start
 
@@ -74,6 +92,35 @@ conda activate tsf
 # Install optional dependencies for full functionality
 pip install pandas torchinfo einops reformer-pytorch
 ```
+
+### Data Preparation
+
+To access the Time-HD benchmark dataset, follow these steps:
+
+a. Create a Hugging Face account, if you do not already have one.
+
+b. Visit the dataset page:  
+   [https://huggingface.co/datasets/Time-HD-Anonymous/High_Dimensional_Time_Series](https://huggingface.co/datasets/Time-HD-Anonymous/High_Dimensional_Time_Series)
+
+c. Click **"Agree and access repository"**. You must be logged in to complete this step.
+
+d. Create new Access Token. Token type should be "write".
+
+e. Authenticate on your local machine by running:
+
+   ```bash
+   huggingface-cli login
+   ```
+
+   and enter your generated token above.
+
+f. Then, you can manually download all the dataset by running:
+
+   ```bash
+   python download_dataset.py
+   ```
+
+The summary of the supported high-dimensional time series datasets is shown in Table 2 above. Besides these, we also support datasets such as ECL, ETTh1, ETTh2, ETTm1, ETTm2, Weather, and Traffic.
 
 ### Basic Usage
 
@@ -102,26 +149,6 @@ accelerate launch run.py --model UCast --data "Measles" --hyper_parameter_search
 accelerate launch --num_processes=1 run.py --model UCast --data "Measles" --gpu 0 --hyper_parameter_searching
 accelerate launch --num_processes=4 run.py --model UCast --data "Measles" --gpu 0,2,3,7 --hyper_parameter_searching
 ```
-
-## 📊 Supported Datasets
-
-### 🎯 Time-HD: High-Dimensional Benchmark
-
-<p align="center">
-<img src=".\pic\Time-HD.png" height = "200" alt="" align=center />
-</p>
-
-Our framework supports the **Time-HD** benchmark dataset through HuggingFace Datasets:
-
-<p align="center">
-<img src=".\pic\dataset.png" height = "300" alt="" align=center />
-</p>
-
-### 📈 Traditional Benchmarks
-- **ETT** (ETTh1, ETTh2, ETTm1, ETTm2) - Electricity transformer temperature
-- **Weather** - Multi-variate weather forecasting
-- **Traffic** - Road traffic flow
-- **ECL** - Electricity consuming load
 
 ## 🔧 Configuration System
 
