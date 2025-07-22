@@ -8,6 +8,7 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-orange.svg)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Framework](https://img.shields.io/badge/Framework-Accelerate-yellow.svg)](https://huggingface.co/docs/accelerate)
+**[<a href="https://arxiv.org/abs/2507.15119">Paper Page</a>]**
 
 A comprehensive, production-ready framework for high-dimensional time series forecasting with support for 20+ state-of-the-art models, distributed training, automated hyperparameter optimization.
 
@@ -24,7 +25,7 @@ A comprehensive, production-ready framework for high-dimensional time series for
 ### 🎯 High-Dimensional Specialized
 | Model | Year | Paper | Description |
 |-------|------|-------|-------------|
-| **UCast** | 2025 | [Learning Latent Hierarchical Channel Structure](https://arxiv.org/abs/placeholder) | High-dimensional forecasting |
+| **UCast** | 2025 | [Learning Latent Hierarchical Channel Structure](https://arxiv.org/abs/2507.15119) | High-dimensional forecasting |
 
 ### 🏛️ Transformer-Based Models
 | Model | Year | Paper | Description |
