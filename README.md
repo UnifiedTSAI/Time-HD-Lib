@@ -4,11 +4,18 @@
 
 ## 🚀 A Library for High-Dimensional Time Series Forecasting
 
+<div align="center">
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/release/python-380/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-orange.svg)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Framework](https://img.shields.io/badge/Framework-Accelerate-yellow.svg)](https://huggingface.co/docs/accelerate)
+</div>
+
+<div align="center">
+
 **[<a href="https://arxiv.org/abs/2507.15119">Paper Page</a>]**
+
+</div>
 
 A comprehensive, production-ready framework for high-dimensional time series forecasting with support for 20+ state-of-the-art models, distributed training, automated hyperparameter optimization.
 
