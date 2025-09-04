@@ -1,4 +1,4 @@
-name: tsf
+name: time-hd-lib
 channels:
   - defaults
   - https://repo.anaconda.com/pkgs/main
