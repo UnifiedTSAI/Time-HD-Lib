@@ -189,3 +189,4 @@ runners.py
 scripts/slurm.sh
 scripts/submit_slurm.sh
 run.sh
+scripts
