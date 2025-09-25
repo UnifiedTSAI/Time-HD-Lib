@@ -2,7 +2,7 @@
 <img src="./pic/Logo.png" height = "100" alt="" align=center />
 </p>
 
-## 🚀 A Library for High-Dimensional Time Series Forecasting **[<a href="https://arxiv.org/abs/2507.15119">Paper Page</a>]**
+## 🚀 A Library for High-Dimensional Time Series Forecasting
 
 [![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/release/python-380/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-orange.svg)](https://pytorch.org/)
@@ -24,7 +24,7 @@ A comprehensive, production-ready framework for high-dimensional time series for
 ### 🎯 High-Dimensional Specialized
 | Model | Year | Paper | Description |
 |-------|------|-------|-------------|
-| **UCast** | 2025 | [Learning Latent Hierarchical Channel Structure](https://arxiv.org/abs/2507.15119) | High-dimensional forecasting |
+| **UCast** | 2025 | [Learning Latent Hierarchical Channel Structure] | High-dimensional forecasting |
 
 ### 🏛️ Transformer-Based Models
 | Model | Year | Paper | Description |
@@ -79,7 +79,6 @@ Our framework supports the **Time-HD** benchmark dataset through HuggingFace Dat
 
 ```bash
 # Clone the repository
-git clone https://github.com/LingFengGold/Time-HD-Lib
 cd Time-HD-Lib
 
 # Method 1: Using pip
@@ -589,47 +588,5 @@ Time-HD-Lib/
         ├── best_result.json             # Best configuration and performance metrics
         ├── hp_summary.json              # Summary of all tested configurations
         └── results.csv                  # All results in tabular format
-```
-## 📝 Citation
-
-If you use Time-HD-Lib or Time-HD benchmark in your research, please cite:
-
-```bibtex
-@article{ucast_2024,
-    title = {Are We Overlooking the Dimensions? Learning Latent Hierarchical Channel Structure for High-Dimensional Time Series Forecasting},
-    author = {Juntong Ni, Shiyu Wang, Zewen Liu, Xiaoming Shi, Xinyue Zhong, Zhou Ye, Wei Jin},
-    journal = {In Submission},
-    year = {2025}
-}
-```
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🤝 Acknowledgments
-
-- **Time-Series-Library** - Foundation and inspiration ([GitHub](https://github.com/thuml/Time-Series-Library))
-- **HuggingFace Accelerate** - Distributed training infrastructure
-- **PyTorch Ecosystem** - Deep learning framework
-- **Time Series Research Community** - For advancing the field
-
-## 🌟 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-1. 🍴 Fork the repository
-2. 🌿 Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. 💻 Make your changes and add tests
-4. ✅ Ensure all tests pass (`python -m pytest tests/`)
-5. 📝 Update documentation if needed
-6. 🚀 Submit a pull request
-
-## 📞 Support & Community
-
-- **📧 Issues**: [GitHub Issues](https://github.com/your-org/Time-HD-Lib/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/your-org/Time-HD-Lib/discussions)  
-
----
 
 **🚀 Ready to forecast the future with high-dimensional time series? Get started today!** 
