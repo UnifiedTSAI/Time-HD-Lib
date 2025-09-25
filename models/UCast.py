@@ -155,13 +155,31 @@ class HierarchicalUpsamplingNetwork(nn.Module):
 #     loss = loss / (D * (D - 1))
 #     return lambda_cov * loss
 
-def covariance_loss(skip_list, lambda_cov=0.1, eps=1e-5):
-    """
-    skip_list: list of tensors, each tensor is of shape [B, C, D]
-    Computes a normalized sum of negative log-determinants of covariance matrices.
-    """
+# def covariance_loss(skip_list, lambda_cov=0.1, eps=1e-5):
+#     """
+#     skip_list: list of tensors, each tensor is of shape [B, C, D]
+#     Computes a normalized sum of negative log-determinants of covariance matrices.
+#     """
+#     total_loss = 0.0
+#     num_layers = len(skip_list) - 1  # exclude input
+#     for x in skip_list[1:]:
+#         B, C, D = x.shape
+#         x_reshaped = x.reshape(B * C, D)
+#         x_centered = (x_reshaped - x_reshaped.mean(dim=0, keepdim=True)) / (
+#             x_reshaped.std(dim=0, keepdim=True) + eps
+#         )
+#         cov = (x_centered.T @ x_centered) / (B * C - 1)
+#         cov = cov + eps * torch.eye(D, device=x.device, dtype=x.dtype)
+
+#         # normalize by dimension (D) to reduce scale variance
+#         loss = -torch.logdet(cov) / D
+#         total_loss += loss
+
+#     return lambda_cov * (total_loss / num_layers if num_layers > 0 else 0.0)
+
+def covariance_loss(skip_list, lambda_cov=0.1, eps=1e-3):
     total_loss = 0.0
-    num_layers = len(skip_list) - 1  # exclude input
+    num_layers = len(skip_list) - 1
     for x in skip_list[1:]:
         B, C, D = x.shape
         x_reshaped = x.reshape(B * C, D)
@@ -171,11 +189,16 @@ def covariance_loss(skip_list, lambda_cov=0.1, eps=1e-5):
         cov = (x_centered.T @ x_centered) / (B * C - 1)
         cov = cov + eps * torch.eye(D, device=x.device, dtype=x.dtype)
 
-        # normalize by dimension (D) to reduce scale variance
-        loss = -torch.logdet(cov) / D
+        sign, logdet = torch.linalg.slogdet(cov)
+        if sign <= 0:
+            loss = torch.tensor(0.0, device=cov.device, dtype=cov.dtype)
+        else:
+            loss = -logdet / D
+
         total_loss += loss
 
     return lambda_cov * (total_loss / num_layers if num_layers > 0 else 0.0)
+
 
 # ---------------------------
 # Final Model

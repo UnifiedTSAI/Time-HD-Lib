@@ -42,7 +42,7 @@ class ExperimentRunner:
     def _setup_environment(self):
         """Setup the experiment environment including seeds, device, and accelerator."""
         # Fix random seeds for reproducibility
-        random_seed = getattr(self.config, 'random_seed', 2021)
+        random_seed = getattr(self.config, 'seed', 2021)
         self._fix_seed(random_seed)
         
         # Setup distributed training accelerator if available

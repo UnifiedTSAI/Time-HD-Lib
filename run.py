@@ -352,7 +352,9 @@ def run_hyperparameter_search(accelerator, args):
             accelerator.print(f"   pred_len={result['pred_len']}: FAILED - {result['error']}")
         
     if accelerator.is_main_process:
-        accelerator.print(f"\n💾 Results saved to: {hp_results_dir}")
+        # Get absolute path for hp_results_dir
+        hp_results_abs_path = os.path.abspath(hp_results_dir)
+        accelerator.print(f"\n💾 Hyperparameter search results saved to: {hp_results_abs_path}")
         
         # Save results to CSV on main process
         save_results_to_csv(args, best_result, hp_results_dir)
@@ -411,10 +413,10 @@ def main():
         return
 
     # Load dataset-specific default parameters from configs/{model}.yaml
-    # 优先级：命令行输入 > 配置文件 > args默认值
+    # Priority: CLI args > config file > default args
     import sys
     
-    # 获取实际从命令行传入的参数名
+    # Collect actual parameter names provided via CLI
     cmd_line_args = set()
     for i, arg in enumerate(sys.argv[1:]):
         if arg.startswith('--'):
@@ -430,7 +432,7 @@ def main():
             defaults = dataset_config[args.data]
             loaded_params = {}
             for k, v in defaults.items():
-                # 只有当参数不是从命令行指定时，才从配置文件读取
+                # Only apply values from config when the parameter is NOT passed via CLI
                 if k not in cmd_line_args:
                     setattr(args, k, v)
                     loaded_params[k] = v
@@ -489,7 +491,13 @@ def main():
         training_results = results['training']
         best_metrics = training_results['best_metrics']
         accelerator.print(f"\n📊 Best Training Results (Epoch {best_metrics['epoch']}):")
-        accelerator.print(f"   Train Loss: {best_metrics['train_loss']:.6f}")
+        
+        # Display train loss components if available
+        if 'train_loss_mse' in best_metrics and 'train_loss_additional' in best_metrics:
+            accelerator.print(f"   Train Loss Components: [MSE: {best_metrics['train_loss_mse']:.6f}, Additional: {best_metrics['train_loss_additional']:.6f}, Total: {best_metrics['train_loss']:.6f}]")
+        else:
+            accelerator.print(f"   Train Loss: {best_metrics['train_loss']:.6f}")
+        
         accelerator.print(f"   Validation Loss: {best_metrics['vali_loss']:.6f}")
         accelerator.print(f"   Validation MAE: {best_metrics['vali_mae_loss']:.6f}")
         accelerator.print(f"   Test Loss: {best_metrics['test_loss']:.6f}")
@@ -502,7 +510,18 @@ def main():
         accelerator.print(f"   MSE: {testing_results['mse']:.6f}")
         accelerator.print(f"   MAE: {testing_results['mae']:.6f}")
     
-    accelerator.print("\n🎉 All results have been saved to the experiments directory.")
+    # Get absolute paths for output directories
+    current_dir = os.path.abspath('.')
+    results_dir = os.path.join(current_dir, 'results')
+    test_results_dir = os.path.join(current_dir, 'test_results')
+    checkpoints_dir = os.path.join(current_dir, 'checkpoints')
+    logs_dir = os.path.join(current_dir, 'logs')
+    
+    accelerator.print("\n🎉 All results have been saved to the following directories:")
+    accelerator.print(f"   📊 Main Results: {results_dir}")
+    accelerator.print(f"   🎯 Test Results & Visualizations: {test_results_dir}")
+    accelerator.print(f"   💾 Model Checkpoints: {checkpoints_dir}")
+    accelerator.print(f"   📝 Training Logs: {logs_dir}")
 
 
 def run_batch_experiments():

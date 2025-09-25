@@ -143,7 +143,7 @@ def create_argument_parser() -> argparse.ArgumentParser:
                         help='Directory for hyperparameter search logs')
 
     # Reproducibility
-    parser.add_argument('--seed', type=int, default=2, 
+    parser.add_argument('--seed', type=int, default=2021, 
                         help='Random seed for reproducibility')
 
     return parser 

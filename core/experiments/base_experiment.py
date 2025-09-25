@@ -74,7 +74,7 @@ class BaseExperiment(ABC):
         # Import the old model dictionary as fallback
         from models import Autoformer, Transformer, TimesNet, Nonstationary_Transformer, DLinear, FEDformer, \
             Informer, LightTS, Reformer, ETSformer, Pyraformer, PatchTST, MICN, Crossformer, FiLM, iTransformer, \
-            Koopa, TiDE, FreTS, TimeMixer, TSMixer, SegRNN, MambaSimple, TemporalFusionTransformer, SCINet, PAttn, TimeXer, MultiPatchFormer,\
+            TiDE, FreTS, TimeMixer, TSMixer, SegRNN, MambaSimple, TemporalFusionTransformer, SCINet, PAttn, TimeXer, MultiPatchFormer,\
             ModernTCN, CCM, PDF, DUET
         
         model_dict = {
@@ -94,7 +94,6 @@ class BaseExperiment(ABC):
             'Crossformer': Crossformer,
             'FiLM': FiLM,
             'iTransformer': iTransformer,
-            'Koopa': Koopa,
             'TiDE': TiDE,
             'FreTS': FreTS,
             'MambaSimple': MambaSimple,
